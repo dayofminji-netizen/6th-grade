@@ -1,0 +1,662 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Korean Traditional Celebration</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Gowun+Dodum&family=Jua&display=swap">
+<style>
+/* Layout: 5x5 sticker-card grid -> full-screen detail sheet with 6 bilingual sentence cards + bottom "my script" tray */
+:root{
+  --bg:#EEF4FF; --card:#FFFFFF; --ink:#232F55; --soft:#5C6890; --line:#D5DEF5;
+  --red:#E8484F; --blue:#2F5BEA; --yellow:#FFC93C; --mint:#2FBF93; --on-accent:#FFFFFF;
+  --shadow:0 4px 0 rgba(35,47,85,.12);
+  --f-display:'Jua','Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --f-en:'Fredoka','Trebuchet MS',system-ui,sans-serif;
+  --f-body:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141A30; --card:#212A47; --ink:#EEF2FF; --soft:#A9B4DA; --line:#35406A;
+  --red:#FF6A70; --blue:#7F9CFF; --yellow:#FFD45E; --mint:#46D9AC; --on-accent:#141A30;
+  --shadow:0 4px 0 rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141A30; --card:#212A47; --ink:#EEF2FF; --soft:#A9B4DA; --line:#35406A;
+  --red:#FF6A70; --blue:#7F9CFF; --yellow:#FFD45E; --mint:#46D9AC; --on-accent:#141A30;
+  --shadow:0 4px 0 rgba(0,0,0,.35); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:20px 40px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto}
+
+/* header */
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.mascot{width:84px;height:84px;flex:none;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.top h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(28px,6vw,44px);line-height:1.1;text-wrap:balance}
+.top h1 small{display:block;font-family:var(--f-en);font-size:.5em;font-weight:500;color:var(--blue);letter-spacing:.02em}
+.top p{margin:6px 0 0;color:var(--soft);max-width:52ch}
+.top .txt{flex:1;min-width:0}
+.stars{margin-left:auto;background:var(--card);border:2px solid var(--yellow);border-radius:999px;padding:6px 14px;font-family:var(--f-en);font-weight:600;white-space:nowrap}
+
+/* chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700}
+.chip small{font-family:var(--f-en);font-weight:500;color:var(--soft);margin-left:6px}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--on-accent)}
+.chip[aria-pressed="true"] small{color:inherit}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:540px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+.tile{--c:#E8484F;position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;
+  background:color-mix(in srgb,var(--c) 16%,var(--card));border:3px solid var(--c);border-radius:26px;padding:14px 8px 12px;box-shadow:var(--shadow);transition:transform .15s}
+.tile:hover{transform:translateY(-4px) rotate(-1deg)}
+.tile .em{font-size:44px;line-height:1.1}
+.tile .ko{font-family:var(--f-display);font-size:21px;line-height:1.2}
+.tile .en{font-family:var(--f-en);font-weight:500;font-size:13.5px;line-height:1.25;color:var(--ink);text-wrap:balance}
+.tile .dt{margin-top:6px;font-size:12px;background:var(--card);border-radius:999px;padding:1px 10px;color:var(--soft)}
+.tile .got{position:absolute;top:8px;right:8px;background:var(--mint);color:var(--on-accent);border-radius:999px;font-family:var(--f-en);font-weight:600;font-size:12px;padding:0 8px}
+
+/* sheet */
+.sheet{position:fixed;inset:0;background:var(--bg);overflow-y:auto;z-index:10;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+.sheet[hidden]{display:none!important}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border-bottom:2px solid var(--line)}
+.bar .sp{flex:1}
+.btn{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;box-shadow:var(--shadow)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:var(--on-accent)}
+.detail{max-width:760px;margin:0 auto;padding:18px 16px 0}
+.hero{--c:#E8484F;display:flex;gap:16px;align-items:center;background:color-mix(in srgb,var(--c) 18%,var(--card));border:3px solid var(--c);border-radius:28px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:18px}
+.hero .em{font-size:64px;line-height:1}
+.hero .t{min-width:0}
+.hero h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,7vw,42px);line-height:1.1}
+.hero .en{font-family:var(--f-en);font-weight:600;font-size:clamp(18px,4.5vw,24px);line-height:1.2;margin-top:2px}
+.hero .meta{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.pill{background:var(--card);border-radius:999px;padding:2px 12px;font-size:13.5px;color:var(--soft)}
+.mini{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:2px 10px;font-size:14px;font-weight:700}
+
+.hint{color:var(--soft);margin:0 0 12px}
+.sents{display:grid;gap:12px}
+.sent{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:14px 16px;box-shadow:var(--shadow);display:grid;gap:8px;transition:border-color .15s}
+.sent.picked{border-color:var(--mint)}
+.sent.run{border-color:var(--blue)}
+.sent .pick{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--soft);cursor:pointer;width:max-content}
+.sent .pick input{width:22px;height:22px;accent-color:var(--mint);margin:0}
+.sent .en{margin:0;font-family:var(--f-en);font-weight:500;font-size:clamp(19px,4.6vw,23px);line-height:1.4}
+.sent .en span{border-radius:6px;padding:0 2px;transition:background .1s}
+.sent .en span.on{background:var(--yellow);color:#232F55}
+.sent .ko{margin:0;color:var(--soft)}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn{padding:5px 12px;font-size:14.5px}
+.turn{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--blue)}
+.turn .lab{flex:none}
+.turn .meter{flex:1;height:14px;background:var(--line);border-radius:999px;overflow:hidden}
+.turn .meter b{display:block;height:100%;width:0;background:var(--mint);border-radius:999px}
+.turn .meter b.go{animation:fill var(--d,4s) linear forwards}
+@keyframes fill{to{width:100%}}
+
+.vocab{margin-top:20px}
+.vocab h3{font-family:var(--f-display);font-weight:400;font-size:22px;margin:0 0 8px}
+.words{display:flex;gap:10px;flex-wrap:wrap}
+.word{background:var(--card);border:2px dashed var(--line);border-radius:18px;padding:8px 14px;text-align:left;display:grid;line-height:1.3}
+.word b{font-family:var(--f-display);font-weight:400;font-size:19px}
+.word i{font-style:normal;font-family:var(--f-en);color:var(--soft);font-size:14px}
+
+/* tray */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:12;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:3px solid var(--mint);display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.dock[hidden]{display:none!important}
+.tray{position:fixed;inset:0;z-index:20;background:rgba(10,14,30,.55);display:flex;align-items:flex-end;justify-content:center}
+.tray[hidden]{display:none!important}
+.tray .box{background:var(--bg);width:min(720px,100%);max-height:88%;overflow-y:auto;border-radius:28px 28px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:grid;gap:12px}
+.tray h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:24px}
+.form{display:grid;gap:6px}
+.form label{font-weight:700;font-size:15px}
+.form label small{font-family:var(--f-en);font-weight:500;color:var(--soft)}
+.form input{border:2px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);padding:10px 12px;font:500 18px var(--f-en);min-width:0;width:100%}
+.tray textarea{width:100%;min-height:200px;border:2px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);padding:12px;font:500 17px/1.5 var(--f-en);resize:vertical}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-weight:700;max-width:calc(100% - 32px);text-align:center;pointer-events:none}
+.toast[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.draw{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:18px;align-items:stretch;background:var(--card);border:3px solid var(--yellow);border-radius:28px;padding:18px;box-shadow:var(--shadow);margin-bottom:20px}
+@media (max-width:720px){.draw{grid-template-columns:minmax(0,1fr)}}
+.drawL{min-width:0;display:grid;gap:10px;align-content:start}
+.drawL h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(26px,5.5vw,34px);line-height:1.1}
+.drawL h2 small{font-family:var(--f-en);font-size:.5em;color:var(--blue);font-weight:500;margin-left:6px}
+.drawL p{margin:0;color:var(--soft)}
+.drawRow{display:flex;gap:10px;flex-wrap:wrap}
+.drawRow input{flex:1;min-width:160px;border:2px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);padding:10px 16px;font:500 18px var(--f-body)}
+.btn.big{font-family:var(--f-display);font-size:22px;padding:8px 26px;background:var(--red);border-color:var(--red)}
+.btn:disabled{opacity:.5;cursor:default}
+.left{font-weight:700;color:var(--ink)!important}
+.log summary{cursor:pointer;font-weight:700;color:var(--blue)}
+.log ol{margin:8px 0;padding-left:26px;display:grid;gap:2px;max-height:220px;overflow-y:auto}
+.log li b{font-family:var(--f-display);font-weight:400}
+.log li small{color:var(--soft);font-family:var(--f-en)}
+.slot{--c:#FFC93C;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;min-height:230px;background:color-mix(in srgb,var(--c) 22%,var(--bg));border:3px dashed var(--c);border-radius:24px;padding:16px}
+.slot .em{font-size:72px;line-height:1.1}
+.slot .ko{font-family:var(--f-display);font-size:clamp(28px,6vw,38px);line-height:1.15}
+.slot .en{font-family:var(--f-en);font-weight:600;font-size:18px;line-height:1.25}
+.slot .who{font-weight:700;color:var(--blue)}
+.slot.spin .em{animation:wob .18s linear infinite}
+.slot.win{border-style:solid;animation:pop .5s ease-out}
+@keyframes wob{50%{transform:translateY(-6px) rotate(6deg)}}
+@keyframes pop{0%{transform:scale(.85)}60%{transform:scale(1.05)}100%{transform:scale(1)}}
+.tile .taken{position:absolute;top:8px;left:8px;max-width:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--yellow);color:#232F55;border-radius:999px;font-size:12px;font-weight:700;padding:0 8px}
+.foot{margin-top:28px;color:var(--soft);font-size:14px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap" id="home">
+  <header class="top">
+    <svg class="mascot" viewBox="0 0 100 100" aria-hidden="true">
+      <path d="M8 62a42 42 0 0 1 84 0c0 14-9 26-42 26S8 76 8 62z" fill="#FFF7E8" stroke="#232F55" stroke-width="3.5"/>
+      <path d="M22 78c8 6 18 8 28 8s20-2 28-8" fill="none" stroke="#2FBF93" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="36" cy="56" r="4.5" fill="#232F55"/><circle cx="64" cy="56" r="4.5" fill="#232F55"/>
+      <ellipse cx="27" cy="66" rx="7" ry="4.5" fill="#FF8FA3"/><ellipse cx="73" cy="66" rx="7" ry="4.5" fill="#FF8FA3"/>
+      <path d="M43 65q7 7 14 0" fill="none" stroke="#232F55" stroke-width="3" stroke-linecap="round"/>
+      <path d="M50 22c-5-8-1-14 6-15-1 8-2 11-6 15z" fill="#2FBF93"/>
+    </svg>
+    <div class="txt">
+      <h1>Korean Traditional Celebration<small>한국의 전통 명절과 기념일</small></h1>
+      <p>하고 싶은 명절을 눌러 보세요. 문장을 골라서 발표 글을 만들 수 있어요.<br>Tap a special day, pick your favorite sentences, and practice saying them!</p>
+    </div>
+    <div class="stars" id="starBox" title="따라 말하기를 끝낼 때마다 별이 하나씩 생겨요">⭐ <span id="starN">0</span></div>
+  </header>
+  <section class="draw" id="draw" aria-labelledby="drawT">
+    <div class="drawL">
+      <h2 id="drawT">🎰 랜덤 뽑기 <small>Lucky Draw</small></h2>
+      <p>이름을 쓰고 뽑기 버튼을 누르면 내가 맡을 명절이 정해져요. 이미 뽑힌 명절은 다시 나오지 않아요.<br>Type your name and press the button. A day that was picked will not come up again.</p>
+      <div class="drawRow">
+        <label for="drawName" class="sr">이름 Name</label>
+        <input id="drawName" type="text" maxlength="20" placeholder="내 이름 My name (선택)" autocomplete="off">
+        <button class="btn pri big" id="drawBtn">뽑기! Draw!</button>
+      </div>
+      <p class="left" id="left"></p>
+      <details class="log" id="logBox">
+        <summary id="logSum">뽑은 기록 Results</summary>
+        <ol id="logList"></ol>
+        <div class="seg">
+          <button class="btn" id="undoDraw">↩ 마지막 취소 Undo</button>
+          <button class="btn" id="resetDraw">처음부터 다시 Reset</button>
+        </div>
+      </details>
+    </div>
+    <div class="slot" id="slot" aria-live="polite"></div>
+  </section>
+  <nav class="chips" id="chips" aria-label="종류 Filter"></nav>
+  <main class="grid" id="grid"></main>
+  <p class="foot">25 Korean days for 25 friends · 한 친구가 하나씩 맡아요</p>
+</div>
+
+<section class="sheet" id="sheet" hidden>
+  <div class="bar">
+    <button class="btn" id="back">← 목록 Back</button>
+    <span class="sp"></span>
+    <button class="btn" id="prev" aria-label="이전 Previous">◀</button>
+    <button class="btn" id="next" aria-label="다음 Next">▶</button>
+  </div>
+  <div class="detail" id="detail"></div>
+</section>
+
+<div class="dock" id="dock" hidden>
+  <span id="dockTxt" style="font-weight:700"></span>
+  <button class="btn pri" id="openTray">내 발표 글 보기 My script</button>
+</div>
+
+<div class="tray" id="tray" hidden>
+  <div class="box" role="dialog" aria-label="내 발표 글">
+    <h3>내 발표 글 · My script</h3>
+    <div class="seg">
+      <button class="btn" id="mEn" aria-pressed="true">English only</button>
+      <button class="btn" id="mBoth" aria-pressed="false">한글 + English</button>
+    </div>
+    <div class="form">
+      <label for="myName">① 내 이름 My name</label>
+      <input id="myName" type="text" maxlength="30" placeholder="e.g. Minji" autocomplete="off">
+      <label for="myDo">② 그날 하고 싶은 것 What I will do <small id="doHint"></small></label>
+      <input id="myDo" type="text" maxlength="60" placeholder="e.g. eat rice cake soup" autocomplete="off">
+    </div>
+    <textarea id="scriptBox" readonly></textarea>
+    <div class="seg">
+      <button class="btn pri" id="copyBtn">복사하기 Copy</button>
+      <button class="btn" id="listenAll">🔊 전체 듣기 Listen</button>
+      <button class="btn" id="closeTray">닫기 Close</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const CATS=[["all","전체","All"],["T","전통 명절","Traditional"],["N","나라 기념일","National Days"],["S","친구·선물","Gifts & Friends"],["C","놀이·문화","Play & Culture"]];
+const H=[
+{id:"seollal",em:"🧧",c:"#E8484F",cat:"T",ko:"설날",en:"Seollal (Korean New Year)",rom:"Seollal",dk:"음력 1월 1일",de:"Lunar Jan 1 (Jan–Feb)",
+ s:[["설날은 한국의 새해예요.","Seollal is Korean New Year."],
+    ["가족이 모두 모여요.","The whole family comes together."],
+    ["우리는 한복을 입어요.","We wear hanbok."],
+    ["어른들께 큰절을 해요.","We bow to the grown-ups."],
+    ["그러면 세뱃돈을 받아요.","Then we get lucky money."],
+    ["떡국을 먹어요. 한 살 더 먹어요!","We eat rice cake soup. We get one year older!"]],
+ w:[["떡국","Tteokguk","rice cake soup"],["한복","Hanbok","traditional clothes"],["세배","Sebae","New Year bow"]]},
+{id:"ipchun",em:"🌱",c:"#2FA36B",cat:"T",ko:"입춘",en:"Ipchun (Start of Spring)",rom:"Ipchun",dk:"2월 4일쯤",de:"Around February 4",
+ s:[["입춘은 봄이 시작되는 날이에요.","Ipchun is the first day of spring."],
+    ["아직은 날씨가 추워요.","It is still cold outside."],
+    ["하지만 곧 따뜻해질 거예요.","But it will be warm soon."],
+    ["사람들은 대문에 좋은 글을 붙여요.","People put good words on the door."],
+    ["'봄이 오니 좋은 일이 많아요'라는 뜻이에요.","They mean, \"Spring is here. Good things will come.\""],
+    ["우리는 행복한 봄을 기다려요.","We wait for a happy spring."]],
+ w:[["봄","Bom","spring"],["대문","Daemun","big door"],["행복","Haengbok","happiness"]]},
+{id:"daeboreum",em:"🌕",c:"#E0A800",cat:"T",ko:"정월대보름",en:"Daeboreum (Great Full Moon)",rom:"Jeongwol Daeboreum",dk:"음력 1월 15일",de:"Lunar Jan 15",
+ s:[["정월대보름은 달이 아주 큰 날이에요.","Daeboreum is a day with a big full moon."],
+    ["우리는 보름달에 소원을 빌어요.","We make a wish to the full moon."],
+    ["땅콩과 호두를 깨물어 먹어요.","We crack and eat peanuts and walnuts."],
+    ["그러면 피부가 튼튼해진대요.","They say it keeps our skin healthy."],
+    ["오곡밥과 나물도 먹어요.","We also eat five-grain rice and veggies."],
+    ["큰 불을 피워 나쁜 기운을 보내요.","We make a big fire to send bad luck away."]],
+ w:[["부럼","Bureom","nuts to crack"],["오곡밥","Ogokbap","five-grain rice"],["보름달","Boreumdal","full moon"]]},
+{id:"valentine",em:"💌",c:"#E5578A",cat:"S",ko:"밸런타인데이",en:"Valentine's Day",rom:"Baelleontain-dei",dk:"2월 14일",de:"February 14",
+ s:[["밸런타인데이는 2월 14일이에요.","Valentine's Day is February 14."],
+    ["한국에서는 초콜릿을 선물해요.","In Korea, we give chocolate."],
+    ["좋아하는 사람에게 줘요.","We give it to people we like."],
+    ["친구와 가족에게도 줘요.","We give it to friends and family too."],
+    ["카드에 예쁜 말을 써요.","We write kind words on a card."],
+    ["한 달 뒤에는 화이트데이예요!","One month later is White Day!"]],
+ w:[["초콜릿","Chokollit","chocolate"],["선물","Seonmul","gift"],["카드","Kadeu","card"]]},
+{id:"samil",em:"🇰🇷",c:"#2F5BEA",cat:"N",ko:"삼일절",en:"March 1st Movement Day",rom:"Samiljeol",dk:"3월 1일",de:"March 1",
+ s:[["삼일절은 3월 1일이에요.","Samiljeol is March 1."],
+    ["옛날에 한국은 자유가 없었어요.","Long ago, Korea was not free."],
+    ["1919년 3월 1일에 사람들이 모였어요.","On March 1, 1919, people came together."],
+    ["사람들은 태극기를 흔들었어요.","They waved the Korean flag."],
+    ["'대한독립 만세!'라고 외쳤어요.","They shouted, \"Long live Korea!\""],
+    ["우리는 그날을 기억해요.","We remember that day."]],
+ w:[["태극기","Taegeukgi","Korean flag"],["독립","Dokrip","freedom"],["만세","Manse","hooray"]]},
+{id:"white",em:"🍬",c:"#8F6BFF",cat:"S",ko:"화이트데이",en:"White Day",rom:"Hwaiteu-dei",dk:"3월 14일",de:"March 14",
+ s:[["화이트데이는 3월 14일이에요.","White Day is March 14."],
+    ["밸런타인데이의 다음 달이에요.","It is one month after Valentine's Day."],
+    ["이 날에는 사탕을 선물해요.","On this day, we give candy."],
+    ["선물을 받은 사람이 답례를 해요.","People who got gifts give something back."],
+    ["예쁜 사탕 바구니가 인기예요.","Pretty candy baskets are popular."],
+    ["'고마워요'라고 말하는 날이에요.","It is a day to say \"thank you.\""]],
+ w:[["사탕","Satang","candy"],["답례","Damnye","giving back"],["고마워요","Gomawoyo","thank you"]]},
+{id:"arbor",em:"🌳",c:"#2FA36B",cat:"N",ko:"식목일",en:"Arbor Day (Tree Planting Day)",rom:"Sikmogil",dk:"4월 5일",de:"April 5",
+ s:[["식목일은 4월 5일이에요.","Sikmokil is April 5."],
+    ["나무를 심는 날이에요.","It is a day to plant trees."],
+    ["나무는 깨끗한 공기를 줘요.","Trees give us clean air."],
+    ["새들도 나무에서 살아요.","Birds live in trees too."],
+    ["우리는 작은 나무를 심어요.","We plant small trees."],
+    ["나무를 사랑해 주세요!","Let's love our trees!"]],
+ w:[["나무","Namu","tree"],["숲","Sup","forest"],["씨앗","Ssiat","seed"]]},
+{id:"children",em:"🎈",c:"#FF7A3C",cat:"N",ko:"어린이날",en:"Children's Day",rom:"Eorininal",dk:"5월 5일",de:"May 5",
+ s:[["어린이날은 5월 5일이에요.","Children's Day is May 5."],
+    ["어린이를 위한 날이에요.","It is a day for kids."],
+    ["학교에 가지 않고 쉬어요.","We do not go to school."],
+    ["가족과 놀이공원에 가요.","We go to amusement parks with family."],
+    ["선물도 받아요.","We get presents too."],
+    ["정말 신나는 날이에요!","It is a very fun day!"]],
+ w:[["어린이","Eorini","child"],["놀이공원","Nori-gongwon","amusement park"],["선물","Seonmul","present"]]},
+{id:"parents",em:"🌹",c:"#E5446D",cat:"N",ko:"어버이날",en:"Parents' Day",rom:"Eobeoinal",dk:"5월 8일",de:"May 8",
+ s:[["어버이날은 5월 8일이에요.","Parents' Day is May 8."],
+    ["부모님께 감사하는 날이에요.","It is a day to thank our parents."],
+    ["할머니, 할아버지께도 감사해요.","We thank our grandparents too."],
+    ["빨간 카네이션을 드려요.","We give them red carnations."],
+    ["감사 편지도 써요.","We write thank-you letters."],
+    ["'사랑해요!'라고 말해요.","We say, \"I love you!\""]],
+ w:[["카네이션","Kaneisyeon","carnation"],["부모님","Bumonim","parents"],["편지","Pyeonji","letter"]]},
+{id:"teachers",em:"🍎",c:"#D93F3F",cat:"N",ko:"스승의 날",en:"Teachers' Day",rom:"Seungui nal",dk:"5월 15일",de:"May 15",
+ s:[["스승의 날은 5월 15일이에요.","Teachers' Day is May 15."],
+    ["선생님께 감사하는 날이에요.","It is a day to thank teachers."],
+    ["학생들은 꽃을 드려요.","Students give flowers."],
+    ["편지도 써요.","We write letters too."],
+    ["노래를 불러 드려요.","We sing songs for them."],
+    ["'선생님, 감사합니다!'","\"Thank you, teacher!\""]],
+ w:[["선생님","Seonsaengnim","teacher"],["감사","Gamsa","thanks"],["노래","Norae","song"]]},
+{id:"buddha",em:"🏮",c:"#F2683C",cat:"T",ko:"부처님오신날",en:"Buddha's Birthday",rom:"Bucheonim osinnal",dk:"음력 4월 8일",de:"Lunar Apr 8 (usually May)",
+ s:[["부처님오신날은 부처님의 생일이에요.","This is the birthday of Buddha."],
+    ["봄에 있고, 쉬는 날이에요.","It is in spring, and it is a day off."],
+    ["절에 예쁜 등이 걸려요.","Temples hang pretty lanterns."],
+    ["연꽃 모양 등이 많아요.","Many lanterns look like lotus flowers."],
+    ["밤에는 등불 행렬을 해요.","At night, there is a lantern parade."],
+    ["등불이 반짝반짝 빛나요.","The lanterns sparkle and glow."]],
+ w:[["연등","Yeondeung","lantern"],["연꽃","Yeonkkot","lotus flower"],["절","Jeol","temple"]]},
+{id:"memorial",em:"🎗️",c:"#5B6B8C",cat:"N",ko:"현충일",en:"Memorial Day",rom:"Hyeonchungil",dk:"6월 6일",de:"June 6",
+ s:[["현충일은 6월 6일이에요.","Memorial Day is June 6."],
+    ["나라를 지킨 분들을 기억해요.","We remember people who protected our country."],
+    ["아침 10시에 사이렌이 울려요.","At 10 a.m., a siren rings."],
+    ["모두 1분 동안 조용히 해요.","Everyone is quiet for one minute."],
+    ["태극기를 달아요.","We put up the Korean flag."],
+    ["고마운 마음을 가져요.","We feel thankful."]],
+ w:[["묵념","Mungnyeom","silent respect"],["사이렌","Sairen","siren"],["군인","Gunin","soldier"]]},
+{id:"dano",em:"🌿",c:"#2FA36B",cat:"T",ko:"단오",en:"Dano Festival",rom:"Dano",dk:"음력 5월 5일",de:"Lunar May 5 (usually June)",
+ s:[["단오는 음력 5월 5일이에요.","Dano is on lunar May 5."],
+    ["여름이 오는 날이에요.","Summer is coming."],
+    ["그네를 타요.","We ride swings."],
+    ["씨름도 해요.","We do ssireum, Korean wrestling."],
+    ["창포물로 머리를 감아요.","We wash our hair with sweet flag water."],
+    ["부채를 선물해요.","We give fans as gifts."]],
+ w:[["그네","Geune","swing"],["씨름","Ssireum","Korean wrestling"],["부채","Buchae","fan"]]},
+{id:"bok",em:"🍲",c:"#F2683C",cat:"T",ko:"복날(초복)",en:"Bok Days (Chobok)",rom:"Bongnal",dk:"7월 중순",de:"Mid-July, the hottest time",
+ s:[["복날은 아주 더운 날이에요.","Bok days are very hot days."],
+    ["여름에 세 번 있어요.","There are three in summer."],
+    ["이 날에는 삼계탕을 먹어요.","We eat samgyetang."],
+    ["닭고기 수프예요.","It is chicken soup."],
+    ["뜨거운 음식을 먹고 힘을 내요.","Hot food gives us energy."],
+    ["수박도 먹어요!","We eat watermelon too!"]],
+ w:[["삼계탕","Samgyetang","ginseng chicken soup"],["인삼","Insam","ginseng"],["수박","Subak","watermelon"]]},
+{id:"jeheon",em:"📜",c:"#5B6B8C",cat:"N",ko:"제헌절",en:"Constitution Day",rom:"Jeheonjeol",dk:"7월 17일",de:"July 17",
+ s:[["제헌절은 7월 17일이에요.","Constitution Day is July 17."],
+    ["한국의 헌법이 만들어진 날이에요.","It is the day Korea's constitution was made."],
+    ["헌법은 나라의 중요한 약속이에요.","A constitution is a very important rule book for a country."],
+    ["1948년에 만들어졌어요.","It was made in 1948."],
+    ["헌법은 모든 사람을 지켜 줘요.","It protects all people."],
+    ["지금은 쉬는 날은 아니에요.","It is not a day off now."]],
+ w:[["헌법","Heonbeop","constitution"],["약속","Yaksok","promise"],["나라","Nara","country"]]},
+{id:"chilseok",em:"🌌",c:"#6C7BFF",cat:"T",ko:"칠석",en:"Chilseok (Star Festival)",rom:"Chilseok",dk:"음력 7월 7일",de:"Lunar July 7",
+ s:[["칠석은 음력 7월 7일이에요.","Chilseok is on lunar July 7."],
+    ["별에 관한 이야기가 있어요.","There is a story about stars."],
+    ["견우와 직녀는 서로 사랑해요.","Gyeonu and Jiknyeo love each other."],
+    ["은하수 때문에 멀리 있어요.","They live far apart across the Milky Way."],
+    ["일 년에 한 번 만나요.","They meet once a year."],
+    ["까치가 다리를 만들어 줘요.","Magpies make a bridge for them."]],
+ w:[["은하수","Eunhasu","Milky Way"],["까치","Kkachi","magpie"],["다리","Dari","bridge"]]},
+{id:"gwangbok",em:"🎆",c:"#2F5BEA",cat:"N",ko:"광복절",en:"Liberation Day",rom:"Gwangbokjeol",dk:"8월 15일",de:"August 15",
+ s:[["광복절은 8월 15일이에요.","Liberation Day is August 15."],
+    ["1945년에 한국은 다시 자유로워졌어요.","In 1945, Korea became free again."],
+    ["'광복'은 '빛이 돌아왔다'는 뜻이에요.","\"Gwangbok\" means \"the light came back.\""],
+    ["사람들은 기뻐서 만세를 불렀어요.","People were happy and shouted hooray."],
+    ["우리는 태극기를 달아요.","We hang the Korean flag."],
+    ["자유를 지킨 분들께 감사해요.","We thank people who worked for freedom."]],
+ w:[["광복","Gwangbok","liberation"],["독립","Dokrip","freedom"],["태극기","Taegeukgi","Korean flag"]]},
+{id:"chuseok",em:"🥮",c:"#E0A800",cat:"T",ko:"추석",en:"Chuseok (Korean Thanksgiving)",rom:"Chuseok",dk:"음력 8월 15일",de:"Lunar Aug 15 (Sep–Oct)",
+ s:[["추석은 가을 명절이에요.","Chuseok is an autumn holiday."],
+    ["가족이 고향에 모여요.","Families go to their hometown."],
+    ["보름달이 아주 커요.","The full moon is big and bright."],
+    ["송편을 만들어 먹어요.","We make and eat songpyeon."],
+    ["송편은 반달 모양 떡이에요.","Songpyeon are half-moon rice cakes."],
+    ["우리는 달을 보며 소원을 빌어요.","We make wishes to the moon."]],
+ w:[["송편","Songpyeon","half-moon rice cake"],["한가위","Hangawi","another name for Chuseok"],["고향","Gohyang","hometown"]]},
+{id:"gaecheon",em:"⛰️",c:"#3E86E0",cat:"N",ko:"개천절",en:"National Foundation Day",rom:"Gaecheonjeol",dk:"10월 3일",de:"October 3",
+ s:[["개천절은 10월 3일이에요.","National Foundation Day is October 3."],
+    ["한국의 첫 나라가 생긴 날이에요.","It is the day Korea's first country began."],
+    ["그 나라의 이름은 고조선이에요.","Its name was Gojoseon."],
+    ["단군 이야기가 있어요.","There is a story about Dangun."],
+    ["곰이 사람이 되고 싶어 했어요.","A bear wanted to become a person."],
+    ["곰은 마늘을 먹고 참았어요.","The bear was patient and ate garlic."]],
+ w:[["곰","Gom","bear"],["호랑이","Horangi","tiger"],["마늘","Maneul","garlic"]]},
+{id:"hangul",em:"✏️",c:"#7C5CFF",cat:"N",ko:"한글날",en:"Hangul Day",rom:"Hangeulnal",dk:"10월 9일",de:"October 9",
+ s:[["한글날은 10월 9일이에요.","Hangul Day is October 9."],
+    ["한글은 한국의 글자예요.","Hangul is the Korean alphabet."],
+    ["세종대왕이 만들었어요.","King Sejong made it."],
+    ["모든 사람이 쉽게 배울 수 있어요.","Everyone can learn it easily."],
+    ["한글은 모두 24글자예요.","Hangul has 24 letters."],
+    ["우리는 한글을 사랑해요!","We love Hangul!"]],
+ w:[["한글","Hangul","Korean alphabet"],["자음","Jaeum","consonant"],["모음","Moeum","vowel"]]},
+{id:"pepero",em:"🍫",c:"#B5651D",cat:"S",ko:"빼빼로데이",en:"Pepero Day",rom:"Ppeppero-dei",dk:"11월 11일",de:"November 11",
+ s:[["빼빼로데이는 11월 11일이에요.","Pepero Day is November 11."],
+    ["1111은 빼빼로 네 개처럼 보여요.","1111 looks like four Pepero sticks."],
+    ["빼빼로는 초콜릿 과자예요.","Pepero is a chocolate snack."],
+    ["길고 가늘어요.","It is long and thin."],
+    ["친구에게 빼빼로를 선물해요.","We give Pepero to friends."],
+    ["함께 나눠 먹으면 더 맛있어요!","It is more yummy when we share!"]],
+ w:[["과자","Gwaja","snack"],["친구","Chingu","friend"],["선물","Seonmul","gift"]]},
+{id:"suneung",em:"📝",c:"#5B6B8C",cat:"C",ko:"수능 날",en:"Suneung (Big Exam Day)",rom:"Suneung",dk:"11월 셋째 목요일쯤",de:"Around the 3rd Thursday of Nov",
+ s:[["수능은 아주 큰 시험이에요.","Suneung is a very big test."],
+    ["고등학생 형, 누나들이 봐요.","High school students take it."],
+    ["대학교에 가려고 봐요.","They take it to go to university."],
+    ["시험 날에는 모두 조용히 해요.","On test day, everyone is quiet."],
+    ["후배들이 응원해 줘요.","Younger students cheer for them."],
+    ["엿을 주며 '붙어라!'라고 해요.","We give sticky candy and say, \"Good luck!\""]],
+ w:[["시험","Siheom","test"],["응원","Eungwon","cheering"],["엿","Yeot","sticky candy"]]},
+{id:"dongji",em:"🥣",c:"#C8443A",cat:"T",ko:"동지",en:"Dongji (Winter Solstice)",rom:"Dongji",dk:"12월 22일쯤",de:"Around December 22",
+ s:[["동지는 밤이 가장 긴 날이에요.","Dongji is the day with the longest night."],
+    ["겨울에 있어요.","It is in winter."],
+    ["이 날 팥죽을 먹어요.","We eat red bean porridge."],
+    ["팥죽은 빨간색이에요.","Red bean porridge is red."],
+    ["빨간색은 나쁜 기운을 쫓아 줘요.","Red chases away bad spirits."],
+    ["그 속에 하얀 새알심이 있어요.","It has white rice balls inside."]],
+ w:[["팥죽","Patjuk","red bean porridge"],["새알심","Saealsim","chewy rice balls"],["겨울","Gyeoul","winter"]]},
+{id:"xmas",em:"🎄",c:"#2E9E5B",cat:"S",ko:"크리스마스",en:"Christmas in Korea",rom:"Keuriseumaseu",dk:"12월 25일",de:"December 25",
+ s:[["크리스마스는 12월 25일이에요.","Christmas is December 25."],
+    ["한국도 쉬는 날이에요.","It is a day off in Korea too."],
+    ["한국은 겨울이라 추워요.","It is winter and cold in Korea."],
+    ["호주는 여름이에요!","In Australia, it is summer!"],
+    ["반짝이는 트리가 있어요.","There are sparkly trees."],
+    ["산타 할아버지를 기다려요.","We wait for Santa Claus."]],
+ w:[["산타","Santa","Santa Claus"],["눈","Nun","snow"],["트리","Teuri","Christmas tree"]]},
+{id:"dol",em:"👶",c:"#FF7EAE",cat:"C",ko:"돌잔치",en:"Doljanchi (First Birthday Party)",rom:"Doljanchi",dk:"아기가 한 살이 되는 날",de:"When a baby turns one",
+ s:[["돌잔치는 아기의 첫 생일이에요.","Doljanchi is a baby's first birthday."],
+    ["아기가 한 살이 되어요.","The baby turns one year old."],
+    ["아기는 한복을 입어요.","The baby wears hanbok."],
+    ["상 위에 여러 물건이 있어요.","There are many things on a table."],
+    ["아기가 하나를 골라요.","The baby picks one."],
+    ["연필을 고르면 똑똑해진대요!","If it picks a pencil, it will be smart!"]],
+ w:[["돌잡이","Doljabi","baby's pick game"],["한복","Hanbok","traditional clothes"],["아기","Agi","baby"]]}
+];
+
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem('hk_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('hk_'+k,JSON.stringify(v))}catch(e){}}};
+let sel=store.get('sel',{}), stars=store.get('stars',0), filter='all', cur=null, mode='en';
+const picks=id=>(sel[id]||[]);
+$('#starN').textContent=stars;
+
+/* ---------- speech ---------- */
+let voices=[]; const loadV=()=>{try{voices=speechSynthesis.getVoices()}catch(e){}}; loadV();
+try{speechSynthesis.addEventListener('voiceschanged',loadV)}catch(e){}
+function pickVoice(l){
+  if(l==='ko')return voices.find(v=>/^ko/i.test(v.lang));
+  return voices.find(v=>/en[-_]AU/i.test(v.lang))||voices.find(v=>/en[-_]GB/i.test(v.lang))||voices.find(v=>/en[-_]US/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
+}
+let sid=0;
+function stopSpeech(){sid++;try{speechSynthesis.cancel()}catch(e){}}
+function speak(text,o={}){
+  if(!('speechSynthesis' in window)){toast('이 브라우저는 소리 읽기를 못 해요. Try another browser!');o.onend&&o.onend();return}
+  stopSpeech(); const my=sid; const lang=o.lang||'en';
+  const u=new SpeechSynthesisUtterance(text);
+  const v=pickVoice(lang); u.lang=v?v.lang:(lang==='en'?'en-AU':'ko-KR'); if(v)u.voice=v;
+  u.rate=o.rate||0.95; u.pitch=1.05;
+  u.onboundary=e=>{if(my===sid&&o.onbound)o.onbound(e.charIndex)};
+  u.onend=()=>{if(my===sid&&o.onend)o.onend()};
+  u.onerror=()=>{if(my===sid&&o.onend)o.onend()};
+  speechSynthesis.speak(u);
+}
+function speakKo(ko,rom){ if(pickVoice('ko'))speak(ko,{lang:'ko',rate:.85}); else speak(rom,{rate:.8}); }
+
+let tt; function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2400)}
+
+/* ---------- home ---------- */
+function renderChips(){
+  $('#chips').innerHTML=CATS.map(([k,ko,en])=>{
+    const n=k==='all'?H.length:H.filter(h=>h.cat===k).length;
+    return `<button class="chip" data-k="${k}" aria-pressed="${k===filter}">${ko}<small>${en} ${n}</small></button>`}).join('');
+}
+function renderGrid(){
+  const list=H.filter(h=>filter==='all'||h.cat===filter);
+  $('#grid').innerHTML=list.map(h=>{const n=picks(h.id).length;
+    return `<button class="tile" style="--c:${h.c}" data-id="${h.id}" aria-label="${h.ko} ${h.en}">
+      ${takenBadge(h.id)}${n?`<span class="got">✓ ${n}</span>`:''}
+      <span class="em" aria-hidden="true">${h.em}</span><span class="ko">${h.ko}</span><span class="en">${h.en}</span><span class="dt">${h.dk}</span></button>`}).join('');
+}
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;filter=b.dataset.k;renderChips();renderGrid()});
+$('#grid').addEventListener('click',e=>{const b=e.target.closest('.tile');if(b)openHoliday(b.dataset.id)});
+
+/* ---------- detail ---------- */
+const words=t=>{const out=[];const re=/\S+/g;let m;while(m=re.exec(t))out.push([m.index,m.index+m[0].length,m[0]]);return out};
+const enHTML=t=>words(t).map(([s,e,w])=>`<span data-s="${s}" data-e="${e}">${w}</span>`).join(' ');
+
+function openHoliday(id){
+  stopPractice(); stopSpeech(); cur=H.find(h=>h.id===id);
+  const h=cur;
+  $('#detail').innerHTML=`
+   <div class="hero" style="--c:${h.c}">
+     <div class="em" aria-hidden="true">${h.em}</div>
+     <div class="t">
+       <h2>${h.ko}</h2>
+       <div class="en">${h.en}</div>
+       <div class="meta"><span class="pill">📅 ${h.dk} · ${h.de}</span>
+         <button class="mini" data-say="en">🔊 ${h.rom}</button></div>
+     </div>
+   </div>
+   <p class="hint">마음에 드는 문장에 체크 ✓ 하면 아래 "내 발표 글"에 들어가요. 인사말과 끝맺음은 자동으로 붙어요. 🔊 듣기, 🐢 천천히, 🎤 따라 말하기를 눌러 연습해요.<br>Check your favorite sentences. Hello and goodbye lines are added for you. Listen, then practice!</p>
+   <div class="sents" id="sents">${h.s.map((p,i)=>`
+     <article class="sent ${picks(h.id).includes(i)?'picked':''}" data-i="${i}">
+       <label class="pick"><input type="checkbox" ${picks(h.id).includes(i)?'checked':''}> <span>내 글에 넣기 · Use this</span></label>
+       <p class="en">${enHTML(p[1])}</p>
+       <p class="ko">${p[0]}</p>
+       <div class="acts">
+         <button class="btn" data-a="play">🔊 듣기 Listen</button>
+         <button class="btn" data-a="slow">🐢 천천히 Slow</button>
+         <button class="btn" data-a="echo">🎤 따라 말하기 Repeat</button>
+       </div>
+       <div class="turn" hidden><span class="lab"></span><span class="meter"><b></b></span></div>
+     </article>`).join('')}</div>
+   <div class="vocab"><h3>꼭 알아야 할 낱말 · Key words</h3>
+     <div class="words">${h.w.map((w,i)=>`<button class="word" data-w="${i}"><b>${w[0]}</b><i>🔊 ${w[1]} = ${w[2]}</i></button>`).join('')}</div></div>`;
+  $('#sheet').hidden=false; $('#sheet').scrollTop=0; $('#home').style.display='none';
+  updateDock();
+}
+function closeHoliday(){stopPractice();stopSpeech();$('#sheet').hidden=true;$('#home').style.display='';$('#dock').hidden=true;cur=null;closeTray();renderGrid()}
+function step(d){const i=H.findIndex(h=>h===cur);openHoliday(H[(i+d+H.length)%H.length].id)}
+$('#back').onclick=closeHoliday; $('#prev').onclick=()=>step(-1); $('#next').onclick=()=>step(1);
+
+function updateDock(){
+  const n=cur?picks(cur.id).length:0;
+  $('#dock').hidden=!cur;
+  $('#dockTxt').textContent=`${n}문장 골랐어요 · ${n} chosen`;
+}
+
+$('#detail').addEventListener('change',e=>{
+  if(e.target.type!=='checkbox')return;
+  const card=e.target.closest('.sent'), i=+card.dataset.i, a=picks(cur.id).slice();
+  const at=a.indexOf(i); if(e.target.checked&&at<0)a.push(i); if(!e.target.checked&&at>=0)a.splice(at,1);
+  sel[cur.id]=a; store.set('sel',sel); card.classList.toggle('picked',e.target.checked); updateDock();
+});
+$('#detail').addEventListener('click',e=>{
+  const say=e.target.closest('[data-say]'); if(say){speakKo(cur.ko,cur.rom);return}
+  const wd=e.target.closest('[data-w]'); if(wd){const w=cur.w[+wd.dataset.w];speakKo(w[0],w[1]);return}
+  const b=e.target.closest('[data-a]'); if(!b)return;
+  const card=b.closest('.sent'), i=+card.dataset.i, txt=cur.s[i][1];
+  stopPractice();
+  if(b.dataset.a==='play')say1(card,txt,.95);
+  if(b.dataset.a==='slow')say1(card,txt,.65);
+  if(b.dataset.a==='echo')practice(card,txt);
+});
+
+/* highlight words while speaking */
+function hl(card,ci){card.querySelectorAll('.en span').forEach(s=>s.classList.toggle('on',ci>=+s.dataset.s&&ci<+s.dataset.e))}
+function clr(card){card.querySelectorAll('.en span.on').forEach(s=>s.classList.remove('on'))}
+function say1(card,txt,rate,done){
+  card.classList.add('run');
+  speak(txt,{rate,onbound:ci=>hl(card,ci),onend:()=>{clr(card);card.classList.remove('run');done&&done()}});
+}
+
+/* echo practice: listen slowly -> your turn -> listen again -> star */
+let pr=null;
+function stopPractice(){
+  if(pr){clearTimeout(pr.t);pr.card.classList.remove('run');clr(pr.card);const tr=pr.card.querySelector('.turn');if(tr)tr.hidden=true;pr=null}
+}
+function practice(card,txt){
+  const me={card,t:0}; pr=me; const tr=card.querySelector('.turn'),lab=tr.querySelector('.lab'),bar=tr.querySelector('b');
+  tr.hidden=false; bar.className=''; bar.style.width='0'; lab.textContent='👂 잘 들어요 Listen…';
+  say1(card,txt,.7,()=>{
+    if(pr!==me)return;
+    const ms=Math.max(3500,words(txt).length*800);
+    lab.textContent='🎤 이제 내 차례! Your turn!'; card.classList.add('run');
+    bar.style.setProperty('--d',ms+'ms'); void bar.offsetWidth; bar.className='go';
+    me.t=setTimeout(()=>{
+      if(pr!==me)return;
+      lab.textContent='👂 다시 들어요 Listen again…';
+      say1(card,txt,.9,()=>{
+        if(pr!==me)return;
+        stars++; store.set('stars',stars); $('#starN').textContent=stars;
+        lab.textContent='🌟 참 잘했어요! Great job!'; bar.className=''; bar.style.width='100%'; card.classList.remove('run');
+        toast('⭐ 별 +1 ! Great job!');
+        me.t=setTimeout(()=>{if(pr===me)stopPractice()},2200);
+      });
+    },ms);
+  });
+}
+
+/* ---------- script tray ---------- */
+const shortName=h=>h.en.replace(/\s*\(.*\)/,'');
+const BL1='______', BL2='____________________';
+function scriptLines(){
+  const h=cur, nm=$('#myName').value.trim()||BL1, act=$('#myDo').value.trim()||BL2, sn=shortName(h);
+  const a=picks(h.id).slice().sort((x,y)=>x-y);
+  const intro=[`Hello. I'm ${nm}. I will introduce ${sn}. It is a holiday in Korea.`,
+               `안녕하세요. 저는 ${nm}예요. ${h.ko}를 소개할게요. 이것은 한국의 명절이에요.`];
+  const outro=[`I'm going to ${act} in ${sn}.`,`저는 ${h.ko}에 ${act}을(를) 할 거예요.`];
+  return [intro,...a.map(i=>[h.s[i][1],h.s[i][0]]),outro];
+}
+function scriptText(){
+  const L=scriptLines();
+  return mode==='en'?L.map(x=>x[0]).join(' '):L.map(x=>x[0]+'\n'+x[1]).join('\n\n');
+}
+function refreshScript(){$('#scriptBox').value=scriptText()}
+function openTray(){
+  $('#doHint').textContent='(eat / wear / play / make … 로 시작해요)';
+  if(!$('#myName').value)$('#myName').value=store.get('name','');
+  refreshScript(); $('#mEn').setAttribute('aria-pressed',mode==='en'); $('#mBoth').setAttribute('aria-pressed',mode!=='en'); $('#tray').hidden=false}
+function closeTray(){$('#tray').hidden=true}
+$('#myName').addEventListener('input',e=>{store.set('name',e.target.value);refreshScript()});
+$('#myDo').addEventListener('input',refreshScript);
+$('#openTray').onclick=openTray; $('#closeTray').onclick=()=>{closeTray();stopSpeech()};
+$('#tray').addEventListener('click',e=>{if(e.target.id==='tray')closeTray()});
+$('#mEn').onclick=()=>{mode='en';openTray()}; $('#mBoth').onclick=()=>{mode='both';openTray()};
+$('#copyBtn').onclick=async()=>{
+  const box=$('#scriptBox'); box.select();
+  try{await navigator.clipboard.writeText(box.value);toast('복사했어요! Copied ✓')}
+  catch(e){toast('글을 길게 눌러 복사해 주세요. Select the text and copy.')}
+};
+$('#listenAll').onclick=()=>{
+  speak(scriptLines().map(x=>x[0]).join(' ').replace(/_{2,}/g,'blank'),{rate:.9});
+};
+
+
+/* ---------- lucky draw (this device; no repeats until reset) ---------- */
+let draws=store.get('draws',[]), spinning=false, resetArm=0;
+const remaining=()=>H.filter(h=>!draws.some(d=>d.id===h.id));
+const rnd=n=>{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n};
+function takenBadge(id){const d=draws.find(x=>x.id===id);return d?`<span class="taken">🎯 ${d.name?d.name.replace(/[<>&]/g,''):'뽑힘'}</span>`:''}
+function slotView(h,cls,who){
+  const el=$('#slot'); el.className='slot '+cls; el.style.setProperty('--c',h?h.c:'#FFC93C');
+  el.innerHTML=h?`<div class="em" aria-hidden="true">${h.em}</div><div class="ko">${h.ko}</div><div class="en">${h.en}</div>${who!==undefined?`<div class="who">${who?who.replace(/[<>&]/g,'')+' 의 명절!':'내가 맡을 명절!'}</div>`:''}${cls==='win'?`<button class="btn pri" id="goWin">열어 보기 Open</button>`:''}`
+   :`<div class="em" aria-hidden="true">❓</div><div class="ko">뽑기 버튼을 눌러요!</div><div class="en">Press the button!</div>`;
+  const g=$('#goWin'); if(g)g.onclick=()=>openHoliday(h.id);
+}
+function renderDraw(){
+  const r=remaining().length;
+  $('#left').textContent=r?`남은 명절 ${r} / ${H.length} · Left: ${r}`:'모든 명절이 뽑혔어요! All days are taken!';
+  $('#drawBtn').disabled=spinning||r===0;
+  $('#logSum').textContent=`뽑은 기록 Results (${draws.length})`;
+  $('#logList').innerHTML=draws.length?draws.map(d=>{const h=H.find(x=>x.id===d.id);return `<li><b>${h.ko}</b> <small>${shortName(h)}</small> — ${d.name?d.name.replace(/[<>&]/g,''):'(이름 없음)'}</li>`}).join(''):'<li style="list-style:none;color:var(--soft)">아직 없어요. Nothing yet.</li>';
+  $('#undoDraw').disabled=spinning||!draws.length;
+  $('#resetDraw').disabled=spinning||!draws.length;
+  $('#resetDraw').textContent=resetArm?'정말 지울까요? 한 번 더! Sure?':'처음부터 다시 Reset';
+}
+function doDraw(){
+  if(spinning)return; const pool=remaining(); if(!pool.length)return;
+  const pick=pool[rnd(pool.length)], name=$('#drawName').value.trim();
+  spinning=true; resetArm=0; stopSpeech(); renderDraw();
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; let n=0;
+  const tick=()=>{
+    if(reduce||n>=20){
+      draws.push({id:pick.id,name}); store.set('draws',draws); spinning=false;
+      slotView(pick,'win',name); $('#drawName').value=''; renderDraw(); renderGrid(); return}
+    slotView(pool[rnd(pool.length)],'spin'); n++; setTimeout(tick,60+n*10);
+  };
+  tick();
+}
+$('#drawBtn').onclick=doDraw;
+$('#drawName').addEventListener('keydown',e=>{if(e.key==='Enter')doDraw()});
+$('#undoDraw').onclick=()=>{if(spinning)return;draws.pop();store.set('draws',draws);resetArm=0;initSlot();renderDraw();renderGrid()};
+$('#resetDraw').onclick=()=>{
+  if(spinning)return;
+  if(!resetArm){resetArm=1;renderDraw();setTimeout(()=>{resetArm=0;renderDraw()},4000);return}
+  draws=[];store.set('draws',draws);resetArm=0;initSlot();renderDraw();renderGrid();toast('처음부터 다시 뽑을 수 있어요! Ready!');
+};
+function initSlot(){const l=draws[draws.length-1];if(l)slotView(H.find(h=>h.id===l.id),'win',l.name);else slotView(null,'')}
+initSlot(); renderDraw();
+
+renderChips(); renderGrid();
+</script>
+
+</body></html>
