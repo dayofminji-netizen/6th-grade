@@ -1,0 +1,708 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Yummy Café English</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Gowun+Dodum&family=Jua&display=swap">
+<style>
+/* Layout: café header + key-expression bubbles -> 4 activity tabs (words grid / listen quiz / order role-play / be-the-waiter) sharing one picture menu */
+:root{
+  --bg:#FFF6EC; --card:#FFFFFF; --ink:#3A2618; --soft:#86634B; --line:#F0DCC6;
+  --tomato:#E5483A; --mustard:#F2B531; --basil:#3FA45B; --sky:#3C7DDB; --on-accent:#FFFFFF;
+  --shadow:0 4px 0 rgba(58,38,24,.12);
+  --f-display:'Jua','Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --f-en:'Fredoka','Trebuchet MS',system-ui,sans-serif;
+  --f-body:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#21170F; --card:#33251A; --ink:#FFF1E2; --soft:#D5B596; --line:#4E3A2A;
+  --tomato:#FF6B5C; --mustard:#FFC94F; --basil:#5CCB7A; --sky:#7EAEFF; --on-accent:#21170F;
+  --shadow:0 4px 0 rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#21170F; --card:#33251A; --ink:#FFF1E2; --soft:#D5B596; --line:#4E3A2A;
+  --tomato:#FF6B5C; --mustard:#FFC94F; --basil:#5CCB7A; --sky:#7EAEFF; --on-accent:#21170F;
+  --shadow:0 4px 0 rgba(0,0,0,.35); color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:20px 48px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.wrap{max-width:1000px;margin:0 auto;display:grid;gap:18px}
+svg.ic{width:1.1em;height:1.1em;vertical-align:-.15em;fill:currentColor}
+
+/* header */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mascot{width:86px;height:86px;flex:none;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.top .txt{flex:1;min-width:0}
+.top h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,6.5vw,46px);line-height:1.1;text-wrap:balance}
+.top h1 small{display:block;font-family:var(--f-en);font-size:.46em;font-weight:500;color:var(--tomato);letter-spacing:.02em}
+.top p{margin:4px 0 0;color:var(--soft)}
+.stars{margin-left:auto;background:var(--card);border:2px solid var(--mustard);border-radius:999px;padding:6px 14px;font-family:var(--f-en);font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* key expressions */
+.keys{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:620px){.keys{grid-template-columns:1fr}}
+.key{display:flex;align-items:center;gap:12px;background:var(--card);border:3px solid var(--line);border-radius:22px;padding:12px 14px;box-shadow:var(--shadow);text-align:left}
+.key .who{flex:none;font-size:12.5px;font-weight:700;color:var(--on-accent);background:var(--tomato);border-radius:999px;padding:2px 10px}
+.key.b .who{background:var(--basil)}
+.key .t{min-width:0;flex:1}
+.key .en{display:block;font-family:var(--f-en);font-weight:600;font-size:clamp(19px,4.4vw,23px);line-height:1.25}
+.key .en u{text-decoration:none;background:color-mix(in srgb,var(--mustard) 35%,transparent);border-radius:6px;padding:0 4px}
+.key .ko{display:block;color:var(--soft);font-size:14.5px}
+.key .spk{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--sky) 15%,var(--card));color:var(--sky);font-size:20px}
+
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:620px){.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tab{background:var(--card);border:3px solid var(--line);border-radius:18px;padding:8px 6px;display:grid;line-height:1.2;text-align:center}
+.tab b{font-family:var(--f-display);font-weight:400;font-size:19px}
+.tab small{font-family:var(--f-en);font-weight:500;color:var(--soft);font-size:13px}
+.tab[aria-selected="true"]{background:var(--tomato);border-color:var(--tomato);color:var(--on-accent)}
+.tab[aria-selected="true"] small{color:inherit}
+.hint{margin:0;color:var(--soft)}
+.panel{display:grid;gap:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:7px 16px;font-weight:700;box-shadow:var(--shadow);transition:transform .1s}
+.btn:active:not(:disabled){transform:translateY(2px);box-shadow:none}
+.btn.pri{background:var(--tomato);border-color:var(--tomato);color:var(--on-accent)}
+.btn.go{background:var(--basil);border-color:var(--basil);color:var(--on-accent)}
+.btn.mic{background:var(--sky);border-color:var(--sky);color:var(--on-accent)}
+.btn.mic.rec{animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--sky) 30%,transparent)}}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* food art */
+.art{width:100%;max-width:100%;aspect-ratio:1;display:block}
+
+/* words grid */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+.food{--c:var(--mustard);position:relative;display:grid;gap:4px;justify-items:center;text-align:center;background:color-mix(in srgb,var(--c) 14%,var(--card));border:3px solid color-mix(in srgb,var(--c) 70%,var(--line));border-radius:24px;padding:10px 8px 10px;box-shadow:var(--shadow)}
+.food .pic{width:min(110px,80%);background:none;border:0;padding:0;transition:transform .15s}
+.food .pic:hover{transform:scale(1.06) rotate(-3deg)}
+.food .en{font-family:var(--f-en);font-weight:600;font-size:18px;line-height:1.2}
+.food .ko{font-size:14px;color:var(--soft);line-height:1.2}
+.food .acts{display:flex;gap:6px;margin-top:4px}
+.food .acts button{width:38px;height:38px;border-radius:50%;border:2px solid var(--line);background:var(--card);display:grid;place-items:center;font-size:17px}
+.food .acts .m{background:var(--sky);border-color:var(--sky);color:var(--on-accent)}
+.food .heard{font-family:var(--f-en);font-size:13px;color:var(--soft);min-height:1.2em;line-height:1.2}
+.food .ok{position:absolute;top:8px;right:8px;background:var(--basil);color:var(--on-accent);border-radius:999px;font-family:var(--f-en);font-weight:600;font-size:12px;padding:0 8px}
+
+/* stage (listen / order / waiter) */
+.stage{background:var(--card);border:3px solid var(--line);border-radius:28px;padding:16px;box-shadow:var(--shadow);display:grid;gap:14px}
+.meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-weight:700;color:var(--soft);font-variant-numeric:tabular-nums}
+.dots{display:flex;gap:5px;align-items:center}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.y{background:var(--basil)}.dots i.n{background:var(--tomato)}.dots i.now{outline:2px solid var(--mustard);outline-offset:1px}
+.scene{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;align-items:start}
+.scene.me{grid-template-columns:minmax(0,1fr) 110px}
+@media (max-width:480px){.scene,.scene.me{grid-template-columns:76px minmax(0,1fr)}.scene.me{grid-template-columns:minmax(0,1fr) 76px}}
+.scene svg.who{width:100%;max-width:100%;aspect-ratio:1}
+.bubble{position:relative;background:color-mix(in srgb,var(--mustard) 18%,var(--card));border:3px solid var(--mustard);border-radius:22px;padding:12px 14px;min-height:64px;display:grid;gap:4px;align-content:center}
+.me .bubble{background:color-mix(in srgb,var(--sky) 12%,var(--card));border-color:var(--sky)}
+.bubble .en{margin:0;font-family:var(--f-en);font-weight:500;font-size:clamp(19px,4.6vw,24px);line-height:1.35}
+.bubble .ko{margin:0;color:var(--soft);font-size:14.5px}
+.bubble .en.blur{filter:blur(7px);user-select:none}
+.bubble .heard{margin:0;font-family:var(--f-en);font-size:14px;color:var(--soft)}
+
+/* picture menu */
+.menu{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+@media (max-width:720px){.menu{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:400px){.menu{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.mi{display:grid;justify-items:center;gap:2px;background:var(--bg);border:3px solid var(--line);border-radius:18px;padding:6px 4px 6px;line-height:1.15;text-align:center;transition:transform .12s,border-color .12s}
+.mi:hover:not(:disabled){transform:translateY(-3px)}
+.mi .art{width:min(70px,90%)}
+.mi span{font-family:var(--f-en);font-weight:500;font-size:13.5px}
+.mi[aria-pressed="true"]{border-color:var(--sky);background:color-mix(in srgb,var(--sky) 16%,var(--card))}
+.mi.right{border-color:var(--basil);background:color-mix(in srgb,var(--basil) 18%,var(--card))}
+.mi.wrong{border-color:var(--tomato);background:color-mix(in srgb,var(--tomato) 14%,var(--card))}
+.mi.big .art{width:min(96px,90%)}
+.mi.big span{font-size:15px}
+
+/* tray */
+.tray{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:84px;padding:10px 14px;border-radius:999px;background:color-mix(in srgb,var(--soft) 16%,var(--card));border:3px dashed var(--line)}
+.tray .lab{font-weight:700;color:var(--soft);font-size:14px;margin-right:4px}
+.tray svg{width:58px;height:58px;animation:drop .35s ease-out}
+@keyframes drop{from{transform:translateY(-16px);opacity:.3}}
+.tray .empty{color:var(--soft);font-size:14px}
+.fb{margin:0;font-weight:700;font-size:17px;min-height:1.5em}
+.fb.y{color:var(--basil)}.fb.n{color:var(--tomato)}
+.note{margin:0;font-size:13.5px;color:var(--soft);background:color-mix(in srgb,var(--mustard) 14%,var(--card));border-radius:14px;padding:8px 12px}
+.big-play{width:96px;height:96px;border-radius:50%;border:0;background:var(--tomato);color:var(--on-accent);display:grid;place-items:center;font-size:40px;box-shadow:var(--shadow);margin:0 auto}
+.big-play:active{transform:translateY(2px)}
+.center{display:grid;justify-items:center;gap:10px;text-align:center}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:30;background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-weight:700;max-width:calc(100% - 32px);text-align:center}
+.pop{animation:pop .45s ease-out}
+@keyframes pop{40%{transform:scale(1.12)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<!-- ===== picture sprite ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+ <g id="ic-spk"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></g>
+ <g id="ic-mic"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V21h2v-3.1A7 7 0 0 0 19 11h-2z"/></g>
+ <g id="ic-slow"><path d="M4 16c0-4 3.5-7 8-7s7 2.5 7.6 5H21a1.5 1.5 0 0 1 0 3H5.5L4 18.5zM9 18.5a1.5 1.5 0 1 0 3 0zm6 0a1.5 1.5 0 1 0 3 0z"/></g>
+ <g id="ic-chk"><path d="M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 11-11-1.4-1.4z"/></g>
+</defs>
+</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+ <symbol id="f-pizza" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M50 92 L17 24 Q50 8 83 24 Z" fill="#F7C948"/>
+  <path d="M14 20 Q50 2 86 20 L83 28 Q50 12 17 28 Z" fill="#D98B3A"/>
+  <circle cx="44" cy="38" r="7" fill="#D9433B"/><circle cx="61" cy="47" r="6" fill="#D9433B"/>
+  <circle cx="44" cy="60" r="5.5" fill="#D9433B"/><circle cx="53" cy="75" r="4" fill="#D9433B"/>
+  <path d="M33 30 q3 -4 6 0" fill="none" stroke="#3FA45B" stroke-width="3"/><path d="M58 64 q3 -4 6 0" fill="none" stroke="#3FA45B" stroke-width="3"/>
+ </g></symbol>
+ <symbol id="f-hamburger" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M16 72 H84 Q84 86 70 86 H30 Q16 86 16 72Z" fill="#E9A23B"/>
+  <rect x="13" y="58" width="74" height="14" rx="7" fill="#7A4A2A"/>
+  <path d="M15 56 H85 L75 66 L68 59 H24Z" fill="#FFD23F"/>
+  <path d="M12 52 q6 7 12 0 q6 7 12 0 q6 7 12 0 q6 7 12 0 q6 7 12 0 q6 7 13 0 L88 57 H12Z" fill="#6CC04A"/>
+  <path d="M15 50 Q15 16 50 16 Q85 16 85 50 Z" fill="#EFAE45"/>
+  <g fill="#FFF7E3" stroke="none"><ellipse cx="38" cy="28" rx="3" ry="1.8"/><ellipse cx="54" cy="25" rx="3" ry="1.8"/><ellipse cx="66" cy="33" rx="3" ry="1.8"/><ellipse cx="30" cy="39" rx="3" ry="1.8"/><ellipse cx="47" cy="37" rx="3" ry="1.8"/></g>
+ </g></symbol>
+ <symbol id="f-spaghetti" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <ellipse cx="50" cy="64" rx="44" ry="24" fill="#FFFFFF"/>
+  <ellipse cx="50" cy="62" rx="32" ry="15" fill="#F3EDE3" stroke="none"/>
+  <path d="M24 62 q7 -16 14 0 q7 -16 14 0 q7 -16 14 0 q6 -12 10 0" fill="none" stroke="#E8B53A" stroke-width="5" stroke-linecap="round"/>
+  <path d="M28 70 q7 -12 14 0 q7 -12 14 0 q7 -12 14 0" fill="none" stroke="#F2C94C" stroke-width="5" stroke-linecap="round"/>
+  <path d="M34 52 Q50 38 66 52 Q58 60 50 58 Q42 60 34 52Z" fill="#D9433B"/>
+  <circle cx="44" cy="49" r="6" fill="#8A4B2B"/><circle cx="57" cy="50" r="6" fill="#8A4B2B"/>
+  <ellipse cx="51" cy="42" rx="4" ry="2.5" fill="#3FA45B"/>
+ </g></symbol>
+ <symbol id="f-salad" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <circle cx="28" cy="46" r="13" fill="#6CC04A"/><circle cx="47" cy="38" r="15" fill="#7FD15A"/><circle cx="68" cy="43" r="13" fill="#6CC04A"/>
+  <circle cx="38" cy="48" r="9" fill="#3E9A3A"/><circle cx="58" cy="46" r="7" fill="#E5483A"/><circle cx="76" cy="50" r="6" fill="#E5483A"/>
+  <circle cx="46" cy="52" r="6" fill="#CDEBA6"/><circle cx="46" cy="52" r="2.5" fill="#9CCB6A" stroke="none"/>
+  <path d="M10 52 H90 Q87 88 50 88 Q13 88 10 52Z" fill="#7FB8E6"/>
+  <path d="M22 66 q6 -5 12 0 q6 -5 12 0 q6 -5 12 0 q6 -5 12 0 q6 -5 10 0" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+ </g></symbol>
+ <symbol id="f-chicken" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M60 60 L82 82" stroke="#3B2A20" stroke-width="14" stroke-linecap="round"/>
+  <path d="M60 60 L82 82" stroke="#F7F0E2" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="88" cy="78" r="7" fill="#F7F0E2"/><circle cx="78" cy="88" r="7" fill="#F7F0E2"/>
+  <path d="M14 42 Q14 12 42 12 Q74 14 72 46 Q70 66 52 70 Q22 74 14 42Z" fill="#C9772F"/>
+  <g fill="#E8A354" stroke="none"><circle cx="30" cy="30" r="4"/><circle cx="46" cy="24" r="3"/><circle cx="56" cy="40" r="4"/><circle cx="36" cy="50" r="3.5"/><circle cx="52" cy="58" r="3"/><circle cx="24" cy="44" r="2.5"/></g>
+ </g></symbol>
+ <symbol id="f-sandwich" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M12 88 L50 30 L88 88Z" fill="#E8B86A"/>
+  <path d="M10 82 L50 24 L90 82Z" fill="#6CC04A"/>
+  <path d="M12 77 L50 21 L88 77Z" fill="#E5483A"/>
+  <path d="M12 72 L50 18 L88 72Z" fill="#FFD23F"/>
+  <path d="M12 66 L50 10 L88 66Z" fill="#E8B86A"/>
+  <path d="M24 60 L50 22 L76 60Z" fill="#FCEBC6" stroke="none"/>
+ </g></symbol>
+ <symbol id="f-bibimbap" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <circle cx="50" cy="52" r="42" fill="#4A4A4A"/>
+  <circle cx="50" cy="52" r="34" fill="#FFFFFF"/>
+  <path d="M50 52 L50 18 A34 34 0 0 1 80 36Z" fill="#F08A24"/>
+  <path d="M50 52 L80 36 A34 34 0 0 1 78 72Z" fill="#3E9A3A"/>
+  <path d="M50 52 L78 72 A34 34 0 0 1 40 85Z" fill="#8A4B2B"/>
+  <path d="M50 52 L40 85 A34 34 0 0 1 17 56Z" fill="#F4E7A1"/>
+  <path d="M50 52 L17 56 A34 34 0 0 1 28 26Z" fill="#7A3E8F"/>
+  <ellipse cx="50" cy="52" rx="15" ry="13" fill="#FFFFFF"/>
+  <circle cx="50" cy="52" r="6.5" fill="#FFC22E"/>
+  <circle cx="34" cy="34" r="4" fill="#D9433B"/>
+ </g></symbol>
+ <g id="gslice"><circle r="17" fill="#1F2A24" stroke="#3B2A20" stroke-width="2.5"/><circle r="13.5" fill="#FFFFFF"/>
+  <circle cx="-4" cy="-4" r="3.5" fill="#FFD23F"/><circle cx="4" cy="-4" r="3.5" fill="#F08A24"/><circle cx="-4" cy="4" r="3.5" fill="#3E9A3A"/><circle cx="4" cy="4" r="3.5" fill="#F29BB0"/></g>
+ <symbol id="f-gimbap" viewBox="0 0 100 100">
+  <ellipse cx="50" cy="80" rx="42" ry="10" fill="#E9D7C0" stroke="#3B2A20" stroke-width="2.5"/>
+  <use href="#gslice" transform="translate(30 58)"/><use href="#gslice" transform="translate(66 60)"/><use href="#gslice" transform="translate(48 30)"/>
+ </symbol>
+ <symbol id="f-tteokbokki" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <ellipse cx="50" cy="60" rx="45" ry="28" fill="#FFFFFF"/>
+  <ellipse cx="50" cy="58" rx="35" ry="19" fill="#E2442F"/>
+  <rect x="24" y="46" width="26" height="9" rx="4.5" fill="#FBE8DC" transform="rotate(-18 37 50)"/>
+  <rect x="50" y="44" width="26" height="9" rx="4.5" fill="#FBE8DC" transform="rotate(14 63 48)"/>
+  <rect x="32" y="60" width="26" height="9" rx="4.5" fill="#FBE8DC" transform="rotate(8 45 64)"/>
+  <rect x="56" y="58" width="22" height="9" rx="4.5" fill="#FBE8DC" transform="rotate(-24 67 62)"/>
+  <path d="M60 66 L72 70 L64 76Z" fill="#E7B677"/>
+  <g fill="#6CC04A" stroke="none"><circle cx="30" cy="62" r="2.5"/><circle cx="48" cy="54" r="2.5"/><circle cx="70" cy="52" r="2.5"/></g>
+ </g></symbol>
+ <symbol id="f-icecream" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M32 54 L50 96 L68 54Z" fill="#E3A857"/>
+  <path d="M38 62 L58 82 M46 56 L64 72 M62 62 L44 84 M54 56 L38 72" fill="none" stroke="#B97A35" stroke-width="2"/>
+  <circle cx="50" cy="46" r="19" fill="#F7A1C4"/>
+  <circle cx="50" cy="26" r="15" fill="#A8E6CF"/>
+  <circle cx="50" cy="9" r="5" fill="#E5483A"/>
+  <path d="M50 4 q4 -4 8 -2" fill="none" stroke="#3B2A20" stroke-width="2"/>
+ </g></symbol>
+ <symbol id="f-juice" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M56 34 L74 6" stroke="#3B2A20" stroke-width="8" stroke-linecap="round"/>
+  <path d="M56 34 L74 6" stroke="#3C7DDB" stroke-width="4" stroke-linecap="round"/>
+  <path d="M28 22 H72 L65 92 H35Z" fill="#E4F2FA"/>
+  <path d="M30.5 38 H69.5 L65 90 H35Z" fill="#FFA62B" stroke="none"/>
+  <path d="M28 22 H72 L65 92 H35Z" fill="none"/>
+  <circle cx="72" cy="24" r="12" fill="#FFB84D"/><circle cx="72" cy="24" r="8" fill="#FFD27F" stroke="none"/>
+  <path d="M72 16 V32 M64 24 H80 M66 18 L78 30 M78 18 L66 30" stroke="#FFA62B" stroke-width="1.5"/>
+  <circle cx="44" cy="54" r="3" fill="#FFFFFF" stroke="none" opacity=".7"/><circle cx="54" cy="70" r="2" fill="#FFFFFF" stroke="none" opacity=".7"/>
+ </g></symbol>
+ <symbol id="f-fries" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <rect x="28" y="16" width="9" height="42" rx="2" fill="#FFD34E" transform="rotate(-12 32 37)"/>
+  <rect x="40" y="10" width="9" height="46" rx="2" fill="#FFC93C" transform="rotate(-4 44 33)"/>
+  <rect x="52" y="12" width="9" height="44" rx="2" fill="#FFD34E" transform="rotate(5 56 34)"/>
+  <rect x="63" y="18" width="9" height="40" rx="2" fill="#FFC93C" transform="rotate(14 67 38)"/>
+  <rect x="46" y="20" width="8" height="34" rx="2" fill="#FFE07A"/>
+  <path d="M20 44 Q50 54 80 44 L72 92 H28Z" fill="#E5483A"/>
+  <path d="M38 66 l4 -8 4 8 4 -8 4 8 4 -8 4 8" fill="none" stroke="#FFD34E" stroke-width="3" stroke-linecap="round"/>
+ </g></symbol>
+
+ <!-- people -->
+ <symbol id="p-chef" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M22 98 Q24 72 50 72 Q76 72 78 98Z" fill="#FFFFFF"/>
+  <path d="M42 74 L50 86 L58 74" fill="#E5483A"/>
+  <circle cx="50" cy="52" r="24" fill="#FFD9B8"/>
+  <path d="M30 34 Q18 30 22 18 Q28 6 40 12 Q46 2 56 6 Q66 2 70 12 Q82 8 80 22 Q80 32 70 34 Z" fill="#FFFFFF"/>
+  <rect x="31" y="30" width="38" height="9" rx="2" fill="#FFFFFF"/>
+  <circle cx="42" cy="52" r="3" fill="#3B2A20"/><circle cx="58" cy="52" r="3" fill="#3B2A20"/>
+  <path d="M42 62 Q50 70 58 62" fill="none"/>
+  <path d="M38 58 q-4 -2 -6 1 M62 58 q4 -2 6 1" fill="none" stroke-width="2"/>
+  <circle cx="36" cy="60" r="3.5" fill="#F6A3A3" stroke="none"/><circle cx="64" cy="60" r="3.5" fill="#F6A3A3" stroke="none"/>
+ </g></symbol>
+ <symbol id="p-kid0" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M22 98 Q24 72 50 72 Q76 72 78 98Z" fill="#F2B531"/>
+  <circle cx="50" cy="50" r="24" fill="#FFD9B8"/>
+  <path d="M26 50 Q24 22 50 22 Q76 22 74 50 Q68 34 50 34 Q34 34 26 50Z" fill="#2B1C14"/>
+  <path d="M24 46 Q18 66 26 76 L30 56Z M76 46 Q82 66 74 76 L70 56Z" fill="#2B1C14"/>
+  <circle cx="42" cy="52" r="3" fill="#3B2A20"/><circle cx="58" cy="52" r="3" fill="#3B2A20"/>
+  <path d="M43 61 Q50 67 57 61" fill="none"/>
+  <circle cx="36" cy="59" r="3.5" fill="#F6A3A3" stroke="none"/><circle cx="64" cy="59" r="3.5" fill="#F6A3A3" stroke="none"/>
+ </g></symbol>
+ <symbol id="p-kid1" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M22 98 Q24 72 50 72 Q76 72 78 98Z" fill="#3FA45B"/>
+  <circle cx="50" cy="50" r="24" fill="#F1C29A"/>
+  <path d="M26 46 Q26 22 50 24 Q74 22 74 46 Q66 40 60 32 Q50 42 26 46Z" fill="#B5652B"/>
+  <circle cx="42" cy="52" r="3" fill="#3B2A20"/><circle cx="58" cy="52" r="3" fill="#3B2A20"/>
+  <path d="M42 60 Q50 68 58 60 Z" fill="#FFFFFF"/>
+ </g></symbol>
+ <symbol id="p-kid2" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M22 98 Q24 72 50 72 Q76 72 78 98Z" fill="#3C7DDB"/>
+  <circle cx="22" cy="34" r="9" fill="#3B2A20"/><circle cx="78" cy="34" r="9" fill="#3B2A20"/>
+  <circle cx="50" cy="50" r="24" fill="#FFE1C6"/>
+  <path d="M26 48 Q26 24 50 24 Q74 24 74 48 Q60 36 40 38 Q30 40 26 48Z" fill="#3B2A20"/>
+  <circle cx="42" cy="52" r="3" fill="#3B2A20"/><circle cx="58" cy="52" r="3" fill="#3B2A20"/>
+  <path d="M44 61 Q50 66 56 61" fill="none"/>
+  <circle cx="36" cy="59" r="3.5" fill="#F6A3A3" stroke="none"/><circle cx="64" cy="59" r="3.5" fill="#F6A3A3" stroke="none"/>
+ </g></symbol>
+ <symbol id="p-kid3" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M22 98 Q24 72 50 72 Q76 72 78 98Z" fill="#E5483A"/>
+  <circle cx="50" cy="50" r="24" fill="#C98E62"/>
+  <path d="M26 44 Q22 24 40 22 Q50 14 62 22 Q78 24 74 44 Q72 30 50 32 Q30 30 26 44Z" fill="#1A120C"/>
+  <rect x="34" y="46" width="13" height="10" rx="4" fill="none"/><rect x="53" y="46" width="13" height="10" rx="4" fill="none"/><path d="M47 50 H53" fill="none"/>
+  <circle cx="40.5" cy="51" r="2.5" fill="#3B2A20"/><circle cx="59.5" cy="51" r="2.5" fill="#3B2A20"/>
+  <path d="M43 62 Q50 67 57 62" fill="none"/>
+ </g></symbol>
+ <symbol id="p-me" viewBox="0 0 100 100"><g stroke="#3B2A20" stroke-width="2.5" stroke-linejoin="round">
+  <path d="M22 98 Q24 72 50 72 Q76 72 78 98Z" fill="#3C7DDB"/>
+  <circle cx="50" cy="50" r="24" fill="#FFD9B8"/>
+  <path d="M24 46 Q24 20 50 22 Q76 20 76 46 Q70 32 56 30 Q60 38 44 36 Q32 38 24 46Z" fill="#3B2A20"/>
+  <circle cx="42" cy="52" r="3" fill="#3B2A20"/><circle cx="58" cy="52" r="3" fill="#3B2A20"/>
+  <ellipse cx="50" cy="63" rx="5" ry="4" fill="#C2453A"/>
+  <circle cx="36" cy="59" r="3.5" fill="#F6A3A3" stroke="none"/><circle cx="64" cy="59" r="3.5" fill="#F6A3A3" stroke="none"/>
+ </g></symbol>
+</defs>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <svg class="mascot" viewBox="0 0 100 100" aria-hidden="true"><use href="#p-chef"/></svg>
+    <div class="txt">
+      <h1><small>Yummy Café English</small>냠냠 카페에서 주문해요</h1>
+      <p>음식 그림을 보고 듣고, 영어로 주문하고, 점원이 되어 주문도 받아 보세요.</p>
+    </div>
+    <div class="stars" id="stars" aria-live="polite">★ 0</div>
+  </header>
+
+  <section class="keys" aria-label="핵심 표현">
+    <button class="key" type="button" data-say="What would you like?" data-voice="waiter">
+      <span class="who">점원</span>
+      <span class="t"><span class="en"><u>What would you like?</u></span><span class="ko">무엇을 드시겠어요?</span></span>
+      <span class="spk"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg></span>
+    </button>
+    <button class="key b" type="button" data-say="I'd like pizza, please." data-voice="kid">
+      <span class="who">손님</span>
+      <span class="t"><span class="en"><u>I'd like</u> pizza, please.</span><span class="ko">피자 주세요. (I'd like = I would like)</span></span>
+      <span class="spk"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg></span>
+    </button>
+  </section>
+
+  <nav class="tabs" role="tablist" aria-label="활동">
+    <button class="tab" role="tab" id="t-words" aria-controls="words" aria-selected="true"><b>1. 낱말 익히기</b><small>Food Words</small></button>
+    <button class="tab" role="tab" id="t-listen" aria-controls="listen" aria-selected="false"><b>2. 듣고 고르기</b><small>Listen &amp; Pick</small></button>
+    <button class="tab" role="tab" id="t-order" aria-controls="order" aria-selected="false"><b>3. 주문하기</b><small>Order Food</small></button>
+    <button class="tab" role="tab" id="t-waiter" aria-controls="waiter" aria-selected="false"><b>4. 점원 되기</b><small>Be the Waiter</small></button>
+  </nav>
+
+  <!-- 1. words -->
+  <section class="panel" id="words" role="tabpanel" aria-labelledby="t-words">
+    <p class="hint">그림을 누르면 낱말을, <svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg> 를 누르면 주문 문장을 들을 수 있어요. <svg class="ic" viewBox="0 0 24 24"><use href="#ic-mic"/></svg> 를 누르고 따라 말해 보세요.</p>
+    <div class="grid" id="wordGrid"></div>
+  </section>
+
+  <!-- 2. listen -->
+  <section class="panel" id="listen" role="tabpanel" aria-labelledby="t-listen" hidden>
+    <p class="hint">손님의 주문을 잘 듣고, 주문한 음식 그림을 모두 골라 보세요. 두 가지를 주문할 때도 있어요!</p>
+    <div class="stage">
+      <div class="meta"><span id="lRound">문제 1 / 10</span><span class="dots" id="lDots"></span></div>
+      <div class="center">
+        <button class="big-play" id="lPlay" type="button" aria-label="주문 듣기"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg></button>
+        <div class="row"><button class="btn" id="lSlow" type="button"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-slow"/></svg> 천천히</button><span class="hint" id="lNeed">음식 1개를 골라요</span></div>
+      </div>
+      <div class="menu" id="lMenu"></div>
+      <div class="row"><button class="btn pri" id="lCheck" type="button" disabled><svg class="ic" viewBox="0 0 24 24"><use href="#ic-chk"/></svg> 확인</button><button class="btn" id="lNext" type="button" hidden>다음 문제 →</button></div>
+      <p class="fb" id="lFb" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- 3. order -->
+  <section class="panel" id="order" role="tabpanel" aria-labelledby="t-order" hidden>
+    <p class="hint">내가 손님이에요. 점원의 질문에 <b>I'd like ~, please.</b> 로 대답해 보세요. 그림을 누르면 할 말이 나와요.</p>
+    <div class="stage">
+      <div class="scene">
+        <svg class="who" viewBox="0 0 100 100" aria-hidden="true"><use href="#p-chef"/></svg>
+        <div class="bubble"><p class="en" id="oWaiter">Welcome to Yummy Café!</p><p class="ko" id="oWaiterKo">시작 버튼을 눌러요.</p></div>
+      </div>
+      <div class="scene me">
+        <div class="bubble"><p class="en" id="oMe">…</p><p class="heard" id="oHeard"></p></div>
+        <svg class="who" viewBox="0 0 100 100" aria-hidden="true"><use href="#p-me"/></svg>
+      </div>
+      <div class="row" id="oCtrl">
+        <button class="btn pri" id="oStart" type="button">시작 Start</button>
+        <button class="btn mic" id="oMic" type="button" hidden><svg class="ic" viewBox="0 0 24 24"><use href="#ic-mic"/></svg> 말해서 주문</button>
+        <button class="btn" id="oModel" type="button" hidden><svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg> 들어보기</button>
+        <button class="btn go" id="oSaid" type="button" hidden disabled><svg class="ic" viewBox="0 0 24 24"><use href="#ic-chk"/></svg> 말했어요</button>
+        <button class="btn" id="oNo" type="button" hidden>No, thanks.</button>
+      </div>
+      <div class="menu" id="oMenu"></div>
+      <div class="tray" id="oTray"><span class="lab">내 쟁반</span><span class="empty">아직 비어 있어요</span></div>
+    </div>
+  </section>
+
+  <!-- 4. waiter -->
+  <section class="panel" id="waiter" role="tabpanel" aria-labelledby="t-waiter" hidden>
+    <p class="hint">내가 점원이에요. 손님에게 <b>What would you like?</b> 라고 묻고, 주문을 듣고 음식을 쟁반에 담아 주세요.</p>
+    <div class="stage">
+      <div class="meta"><span id="wRound">손님 1 / 5</span><span class="dots" id="wDots"></span></div>
+      <div class="scene">
+        <svg class="who" viewBox="0 0 100 100" aria-hidden="true"><use id="wFace" href="#p-kid0"/></svg>
+        <div class="bubble"><p class="en" id="wCust">Hi!</p><p class="ko" id="wCustKo"></p></div>
+      </div>
+      <div class="scene me">
+        <div class="bubble"><p class="en" id="wMe">What would you like?</p><p class="heard" id="wHeard">먼저 손님에게 물어보세요.</p></div>
+        <svg class="who" viewBox="0 0 100 100" aria-hidden="true"><use href="#p-chef"/></svg>
+      </div>
+      <div class="row" id="wAsk">
+        <button class="btn" id="wModel" type="button"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg> 들어보기</button>
+        <button class="btn mic" id="wMic" type="button"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-mic"/></svg> 말하기</button>
+        <button class="btn go" id="wSaid" type="button"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-chk"/></svg> 말했어요</button>
+      </div>
+      <div class="row" id="wHear" hidden>
+        <button class="btn" id="wAgain" type="button"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg> 다시 듣기</button>
+        <button class="btn" id="wSlow" type="button"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-slow"/></svg> 천천히</button>
+        <button class="btn" id="wShow" type="button">글자 보기</button>
+      </div>
+      <div class="menu" id="wMenu"></div>
+      <div class="tray" id="wTray"><span class="lab">손님 쟁반</span><span class="empty">음식 그림을 누르면 담겨요</span></div>
+      <div class="row">
+        <button class="btn pri" id="wServe" type="button" disabled>Here you are. 드리기</button>
+        <button class="btn" id="wClear" type="button" disabled>비우기</button>
+        <button class="btn" id="wNext" type="button" hidden>다음 손님 →</button>
+      </div>
+      <p class="fb" id="wFb" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <p class="note" id="micNote" hidden></p>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const FOODS=[
+ {id:'pizza',en:'pizza',ko:'피자',c:'#F2B531',alias:['pizza','pizzas','piza']},
+ {id:'hamburger',en:'a hamburger',ko:'햄버거',c:'#C9772F',alias:['hamburger','hamburgers','burger','burgers','hamburg']},
+ {id:'spaghetti',en:'spaghetti',ko:'스파게티',c:'#E5483A',alias:['spaghetti','spagetti','spaghettis','pasta']},
+ {id:'salad',en:'salad',ko:'샐러드',c:'#3FA45B',alias:['salad','salads','salat','sallad']},
+ {id:'chicken',en:'fried chicken',ko:'치킨',c:'#C9772F',alias:['fried chicken','chicken','chickens','kitchen']},
+ {id:'sandwich',en:'a sandwich',ko:'샌드위치',c:'#F2B531',alias:['sandwich','sandwiches','sand which','sandwhich']},
+ {id:'bibimbap',en:'bibimbap',ko:'비빔밥',c:'#F08A24',tts:'bee bim bahp',alias:['bibimbap','bibimbop','bibimbab','bibim bap','bibim','bebop','be bop','bibi','bimbap','bim bap']},
+ {id:'gimbap',en:'gimbap',ko:'김밥',c:'#3FA45B',tts:'kim bahp',alias:['gimbap','kimbap','kimbab','gimbab','kim bap','kim bob','kimbob','gym bop','kim bop','kimba']},
+ {id:'tteokbokki',en:'tteokbokki',ko:'떡볶이',c:'#E5483A',tts:'tuck bo kee',alias:['tteokbokki','topokki','tokbokki','tteok','ddukbokki','tokboki','dokbokki','duck bokki','tuck bokki','bokki','bokie','boki','tuck bow key','duck bo key']},
+ {id:'icecream',en:'ice cream',ko:'아이스크림',c:'#F29BB0',alias:['ice cream','icecream','ice creams','i scream']},
+ {id:'juice',en:'orange juice',ko:'오렌지 주스',c:'#F08A24',alias:['orange juice','juice','juices','orange']},
+ {id:'fries',en:'French fries',ko:'감자튀김',c:'#E5483A',alias:['french fries','fries','fry','french fry','fried potatoes']},
+];
+const F=Object.fromEntries(FOODS.map(f=>[f.id,f]));
+const $=s=>document.querySelector(s);
+const art=(id,cls='art')=>`<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true"><use href="#f-${id}"/></svg>`;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const sample=(a,n)=>shuffle(a).slice(0,n);
+const ttsName=f=>f.tts||f.en;
+const list=(arr,key)=>arr.length===1?arr[0][key]:arr.slice(0,-1).map(x=>x[key]).join(', ')+' and '+arr[arr.length-1][key];
+const sentence=(foods,tts)=>`I'd like ${list(foods.map(f=>({n:tts?ttsName(f):f.en})),'n')}, please.`;
+const kos=foods=>foods.map(f=>f.ko).join(', ');
+
+/* ---------- storage ---------- */
+let stars=0; try{stars=+localStorage.getItem('yummyStars')||0}catch(e){}
+function addStar(n=1){stars+=n;try{localStorage.setItem('yummyStars',stars)}catch(e){} const s=$('#stars');s.textContent='★ '+stars;s.classList.remove('pop');void s.offsetWidth;s.classList.add('pop')}
+$('#stars').textContent='★ '+stars;
+
+let tt; function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2600)}
+
+/* ---------- sounds ---------- */
+let actx; function ding(ok){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const notes=ok?[660,880]:[300,220];notes.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;o.type='triangle';g.gain.setValueAtTime(.18,actx.currentTime+i*.12);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+i*.12+.25);o.connect(g).connect(actx.destination);o.start(actx.currentTime+i*.12);o.stop(actx.currentTime+i*.12+.3)})}catch(e){}}
+
+/* ---------- speech out ---------- */
+let voices=[]; const loadV=()=>{try{voices=speechSynthesis.getVoices()}catch(e){}}; loadV();
+try{speechSynthesis.addEventListener('voiceschanged',loadV)}catch(e){}
+const enVoices=()=>voices.filter(v=>/^en/i.test(v.lang));
+function pickVoice(kind){
+  const en=enVoices(); if(!en.length)return null;
+  const us=en.filter(v=>/en[-_]US/i.test(v.lang)); const pool=us.length?us:en;
+  if(kind==='kid'){return pool.find(v=>/female|samantha|zira|aria|jenny|google us english/i.test(v.name))||pool[0]}
+  return pool.find(v=>/male|daniel|david|guy|alex/i.test(v.name)&&!/female/i.test(v.name))||pool[pool.length>1?1:0];
+}
+let lastU;
+function speak(text,{rate=.9,kind='waiter',pitch}={}){
+  return new Promise(res=>{
+    if(!('speechSynthesis' in window)){toast('이 브라우저는 소리 읽기를 못 해요. 크롬이나 사파리를 써 보세요.');return res()}
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text); lastU=u;
+    const v=pickVoice(kind); u.lang=v?v.lang:'en-US'; if(v)u.voice=v;
+    u.rate=rate; u.pitch=pitch??(kind==='kid'?1.35:1);
+    let done=false; const fin=()=>{if(!done){done=true;res()}};
+    u.onend=fin; u.onerror=fin; setTimeout(fin,1500+text.length*140/rate);
+    speechSynthesis.speak(u);
+  });
+}
+
+/* ---------- speech in ---------- */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let micOK=!!SR;
+function micNote(msg){const n=$('#micNote');n.textContent=msg;n.hidden=false}
+if(!micOK)micNote('이 브라우저에서는 마이크 인식을 쓸 수 없어요. 소리 내어 말한 뒤 “말했어요” 버튼을 눌러 주세요. (크롬에서 열면 마이크로 말할 수 있어요.)');
+function syncMic(){document.querySelectorAll('.btn.mic,.food .m').forEach(b=>b.hidden=!micOK)}
+let recBusy=false;
+function listen(btn){
+  return new Promise((res,rej)=>{
+    if(!micOK||recBusy)return rej('nosupport');
+    try{speechSynthesis.cancel()}catch(e){}
+    const r=new SR(); r.lang='en-US'; r.maxAlternatives=5; r.interimResults=false; r.continuous=false;
+    let got=false; recBusy=true; btn&&btn.classList.add('rec');
+    const end=()=>{recBusy=false;btn&&btn.classList.remove('rec')};
+    r.onresult=e=>{got=true;end();res([...e.results[0]].map(a=>a.transcript))};
+    r.onerror=e=>{got=true;end();
+      if(e.error==='not-allowed'||e.error==='service-not-allowed'||e.error==='audio-capture'){micOK=false;syncMic();micNote('마이크를 쓸 수 없어요. 소리 내어 말한 뒤 “말했어요” 버튼을 눌러 주세요.')}
+      rej(e.error)};
+    r.onend=()=>{if(!got){end();rej('no-speech')}};
+    try{r.start()}catch(err){end();rej('start')}
+  });
+}
+const norm=s=>' '+s.toLowerCase().replace(/[’']/g,'').replace(/[^a-z ]/g,' ').replace(/\s+/g,' ').trim()+' ';
+function findFoods(alts){
+  for(const a of alts){
+    const t=norm(a), tj=t.replace(/ /g,'');
+    const hits=FOODS.filter(f=>f.alias.some(al=>t.includes(' '+al+' ')||(al.length>5&&tj.includes(al.replace(/ /g,'')))));
+    // "fried chicken" also matches "fries"? keep fries only if "fries"/"fry" appears separately
+    if(hits.length)return {hits,text:a};
+  }
+  return {hits:[],text:alts[0]||''};
+}
+const hasLike=alts=>alts.some(a=>/\b(like|i d|id|would|want|please)\b/.test(norm(a)));
+const isNo=alts=>alts.some(a=>/\b(no|nothing|thats all|that s all|thats it|im good|done)\b/.test(norm(a)));
+const isAsk=alts=>alts.some(a=>{const t=norm(a);return /\bwhat\b/.test(t)&&/\b(like|would|want)\b/.test(t)});
+const errMsg=e=>e==='no-speech'?'소리가 안 들렸어요. 마이크 가까이에서 다시 말해 보세요.':'다시 한 번 눌러서 말해 보세요.';
+
+/* ---------- key expressions ---------- */
+document.querySelectorAll('.key').forEach(b=>b.onclick=()=>speak(b.dataset.say,{kind:b.dataset.voice}));
+
+/* ---------- tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+function openTab(id){
+  tabs.forEach(t=>{const on=t.getAttribute('aria-controls')===id;t.setAttribute('aria-selected',on);$('#'+t.getAttribute('aria-controls')).hidden=!on});
+  try{speechSynthesis.cancel()}catch(e){}
+  try{localStorage.setItem('yummyTab',id)}catch(e){}
+}
+tabs.forEach(t=>t.onclick=()=>openTab(t.getAttribute('aria-controls')));
+const startTab=(location.hash||'').slice(1); let savedTab=null; try{savedTab=localStorage.getItem('yummyTab')}catch(e){}
+const firstTab=['words','listen','order','waiter'].includes(startTab)?startTab:(['words','listen','order','waiter'].includes(savedTab)?savedTab:'words');
+
+/* ---------- 1. words ---------- */
+let learned={}; try{learned=JSON.parse(localStorage.getItem('yummyLearned')||'{}')}catch(e){}
+$('#wordGrid').innerHTML=FOODS.map(f=>`
+ <div class="food" style="--c:${f.c}" data-id="${f.id}">
+  ${learned[f.id]?'<span class="ok">Great!</span>':''}
+  <button class="pic" type="button" aria-label="${f.en.replace(/^an? /,'')} 듣기">${art(f.id)}</button>
+  <div class="en">${f.en.replace(/^an? /,'')}</div><div class="ko">${f.ko}</div>
+  <div class="acts">
+   <button type="button" class="s" aria-label="주문 문장 듣기" title="I'd like ${f.en}, please."><svg class="ic" viewBox="0 0 24 24"><use href="#ic-spk"/></svg></button>
+   <button type="button" class="m" aria-label="따라 말하기"><svg class="ic" viewBox="0 0 24 24"><use href="#ic-mic"/></svg></button>
+  </div>
+  <div class="heard"></div>
+ </div>`).join('');
+document.querySelectorAll('.food').forEach(card=>{
+  const f=F[card.dataset.id], h=card.querySelector('.heard');
+  card.querySelector('.pic').onclick=()=>{speak(ttsName(f).replace(/^an? /,''),{rate:.8});h.textContent=`I'd like ${f.en}.`};
+  card.querySelector('.s').onclick=()=>{speak(sentence([f],true),{kind:'kid'});h.textContent=`I'd like ${f.en}, please.`};
+  const m=card.querySelector('.m');
+  m.onclick=async()=>{
+    h.textContent='듣고 있어요…';
+    try{
+      const alts=await listen(m); const {hits,text}=findFoods(alts);
+      if(hits.some(x=>x.id===f.id)){h.textContent=`“${text}” 잘했어요!`;ding(true);
+        if(!learned[f.id]){learned[f.id]=1;addStar();try{localStorage.setItem('yummyLearned',JSON.stringify(learned))}catch(e){}
+          card.insertAdjacentHTML('afterbegin','<span class="ok">Great!</span>')}}
+      else{h.textContent=`“${text}” 다시 해 봐요`;ding(false)}
+    }catch(e){h.textContent=micOK?errMsg(e):''}
+  };
+});
+
+/* ---------- picture menu builder ---------- */
+function buildMenu(el,ids,onTap,big){
+  el.innerHTML=ids.map(id=>`<button type="button" class="mi${big?' big':''}" data-id="${id}" aria-pressed="false">${art(id)}<span>${F[id].en.replace(/^an? /,'')}</span></button>`).join('');
+  el.querySelectorAll('.mi').forEach(b=>b.onclick=()=>onTap(b,F[b.dataset.id]));
+}
+function renderTray(el,items,label,emptyText){
+  el.innerHTML=`<span class="lab">${label}</span>`+(items.length?items.map(f=>`<svg viewBox="0 0 100 100" role="img" aria-label="${f.en}"><use href="#f-${f.id}"/></svg>`).join(''):`<span class="empty">${emptyText}</span>`);
+}
+
+/* ---------- 2. listen & pick ---------- */
+const L={n:0,total:10,res:[],ans:[],choices:[],picked:new Set(),done:false};
+function lDots(){$('#lDots').innerHTML=Array.from({length:L.total},(_,i)=>`<i class="${L.res[i]===true?'y':L.res[i]===false?'n':''}${i===L.n?' now':''}"></i>`).join('')}
+function lNew(){
+  if(L.n>=L.total){const ok=L.res.filter(Boolean).length;$('#lFb').className='fb y';$('#lFb').textContent=`끝! ${L.total}문제 중 ${ok}개 맞혔어요. 다시 하려면 “처음부터”를 눌러요.`;$('#lNext').hidden=false;$('#lNext').textContent='처음부터 ↺';L.n=0;L.res=[];L.restart=true;return}
+  const k=L.n<4?1:L.n<8?2:(Math.random()<.5?2:3);
+  L.ans=sample(FOODS,k); const others=sample(FOODS.filter(f=>!L.ans.includes(f)),k===1?5:k===2?6:7);
+  L.choices=shuffle([...L.ans,...others]); L.picked=new Set(); L.done=false;
+  $('#lRound').textContent=`문제 ${L.n+1} / ${L.total}`; $('#lNeed').textContent=`음식 ${k}개를 골라요`;
+  buildMenu($('#lMenu'),L.choices.map(f=>f.id),(b,f)=>{
+    if(L.done)return; if(L.picked.has(f.id)){L.picked.delete(f.id);b.setAttribute('aria-pressed','false')}
+    else{if(L.picked.size>=L.ans.length){toast(`${L.ans.length}개만 고를 수 있어요`);return}L.picked.add(f.id);b.setAttribute('aria-pressed','true');speak(ttsName(f).replace(/^an? /,''),{rate:.9})}
+    $('#lCheck').disabled=L.picked.size!==L.ans.length;
+  },true);
+  $('#lCheck').disabled=true;$('#lNext').hidden=true;$('#lFb').textContent='';$('#lFb').className='fb';lDots();
+}
+const lText=(rate)=>speak(sentence(L.ans,true),{kind:'kid',rate});
+$('#lPlay').onclick=()=>lText(.9); $('#lSlow').onclick=()=>lText(.65);
+$('#lCheck').onclick=()=>{
+  L.done=true; const ok=L.ans.every(f=>L.picked.has(f.id));
+  $('#lMenu').querySelectorAll('.mi').forEach(b=>{const id=b.dataset.id,isA=L.ans.some(f=>f.id===id);if(isA)b.classList.add('right');else if(L.picked.has(id))b.classList.add('wrong')});
+  L.res[L.n]=ok; ding(ok); if(ok)addStar();
+  $('#lFb').className='fb '+(ok?'y':'n'); $('#lFb').textContent=(ok?'정답! ':'아쉬워요. ')+`“${sentence(L.ans)}” (${kos(L.ans)} 주세요.)`;
+  $('#lCheck').disabled=true; L.n++; $('#lNext').hidden=false; $('#lNext').textContent=L.n>=L.total?'결과 보기 →':'다음 문제 →'; lDots();
+};
+$('#lNext').onclick=()=>{if(L.restart){L.restart=false;$('#lNext').textContent='다음 문제 →'}lNew(); if(!L.restart)lText(.9)};
+
+/* ---------- 3. order role-play ---------- */
+const O={state:'idle',tray:[],pending:null};
+const oSay=async(en,ko)=>{$('#oWaiter').textContent=en;$('#oWaiterKo').textContent=ko;await speak(en,{kind:'waiter'})};
+function oMe(en,heard=''){$('#oMe').textContent=en;$('#oHeard').textContent=heard}
+function oControls(){
+  const live=O.state==='ask'||O.state==='more';
+  $('#oStart').hidden=live; $('#oStart').textContent=O.state==='done'?'새 주문 New order':'시작 Start';
+  $('#oMic').hidden=!live||!micOK; $('#oModel').hidden=!live; $('#oSaid').hidden=!live; $('#oNo').hidden=O.state!=='more';
+  $('#oSaid').disabled=!O.pending; $('#oModel').disabled=!O.pending;
+  $('#oMenu').querySelectorAll('.mi').forEach(b=>{b.disabled=!live;b.setAttribute('aria-pressed',O.pending&&O.pending.food&&O.pending.food.id===b.dataset.id?'true':'false')});
+}
+async function oAccept(foods){
+  const fresh=foods.filter(f=>!O.tray.includes(f)); O.tray.push(...fresh); renderTray($('#oTray'),O.tray,'내 쟁반','아직 비어 있어요');
+  O.pending=null; ding(true); addStar(); oControls();
+  O.state='wait'; oControls();
+  await oSay(`${list(foods.map(f=>({n:f.en.replace(/^an? /,'')})),'n')}? Sure! Anything else?`,`${kos(foods)}요? 네! 더 필요한 건 없으세요?`);
+  O.state='more'; oMe('…'); oControls();
+}
+async function oFinish(){
+  O.pending=null; O.state='wait'; oControls(); ding(true);
+  await oSay('OK. Here you are. Enjoy your meal!','네, 여기 있어요. 맛있게 드세요!');
+  O.state='done'; oMe('Thank you!','주문 성공! 새 주문을 해 볼까요?'); speak('Thank you!',{kind:'kid'}); oControls();
+}
+buildMenu($('#oMenu'),FOODS.map(f=>f.id),(b,f)=>{
+  O.pending={food:f,text:`I'd like ${f.en}, please.`}; oMe(O.pending.text,`${f.ko} 주세요. 소리 내어 말해 보세요!`);
+  speak(sentence([f],true),{kind:'kid'}); oControls();
+});
+$('#oStart').onclick=async()=>{O.tray=[];O.pending=null;renderTray($('#oTray'),[],'내 쟁반','아직 비어 있어요');oMe('…');O.state='wait';oControls();
+  await oSay('Hello! What would you like?','안녕하세요! 무엇을 드시겠어요?'); O.state='ask'; oControls()};
+$('#oModel').onclick=()=>O.pending&&speak(O.pending.food?sentence([O.pending.food],true):O.pending.text,{kind:'kid'});
+$('#oNo').onclick=()=>{O.pending={food:null,text:'No, thanks.'};oMe('No, thanks.','아니요, 괜찮아요. 소리 내어 말해 보세요!');speak('No, thanks.',{kind:'kid'});oControls()};
+$('#oSaid').onclick=()=>{if(!O.pending)return; if(O.pending.food)oAccept([O.pending.food]); else oFinish()};
+$('#oMic').onclick=async()=>{
+  $('#oHeard').textContent='듣고 있어요…';
+  try{
+    const alts=await listen($('#oMic')); const {hits,text}=findFoods(alts);
+    if(O.state==='more'&&!hits.length&&isNo(alts)){oMe(text);return oFinish()}
+    if(hits.length){oMe(text,hasLike(alts)?'잘 했어요!':'좋아요! 다음엔 I\'d like 를 붙여 말해 봐요.');return oAccept(hits)}
+    oMe(text||'…','메뉴에 있는 음식을 말해 주세요.'); ding(false);
+    await oSay('Sorry? What would you like?','네? 무엇을 드시겠어요?');
+  }catch(e){$('#oHeard').textContent=micOK?errMsg(e):'소리 내어 말한 뒤 “말했어요”를 눌러요.';oControls()}
+};
+
+/* ---------- 4. be the waiter ---------- */
+const NAMES=['Mina','Jake','Sora','Leo','Yuna'];
+const W={n:0,total:5,res:[],order:[],tray:[],step:'ask',show:false};
+function wDots(){$('#wDots').innerHTML=Array.from({length:W.total},(_,i)=>`<i class="${W.res[i]===true?'y':W.res[i]===false?'n':''}${i===W.n?' now':''}"></i>`).join('')}
+function wLine(){return `${sentence(W.order)}`}
+function wSetCust(en,ko,blur){const e=$('#wCust');e.textContent=en;e.classList.toggle('blur',!!blur);$('#wCustKo').textContent=ko}
+function wUI(){
+  $('#wAsk').hidden=W.step!=='ask'; $('#wHear').hidden=W.step!=='serve'; $('#wMic').hidden=!micOK;
+  $('#wServe').disabled=W.step!=='serve'||!W.tray.length; $('#wClear').disabled=W.step!=='serve'||!W.tray.length;
+  $('#wNext').hidden=W.step!=='after';
+  $('#wMenu').querySelectorAll('.mi').forEach(b=>b.disabled=W.step!=='serve');
+  $('#wShow').textContent=W.show?'글자 숨기기':'글자 보기';
+}
+function wNew(){
+  if(W.n>=W.total){W.n=0;W.res=[]}
+  const k=W.n===0?1:(Math.random()<.7?2:3);
+  W.order=sample(FOODS,k); W.tray=[]; W.step='ask'; W.show=false;
+  $('#wFace').setAttribute('href','#p-kid'+(W.n%4));
+  $('#wRound').textContent=`손님 ${W.n+1} / ${W.total} · ${NAMES[W.n]}`;
+  wSetCust('Hi!','안녕하세요!'); $('#wMe').textContent='What would you like?'; $('#wHeard').textContent='먼저 손님에게 물어보세요.';
+  renderTray($('#wTray'),[],'손님 쟁반','음식 그림을 누르면 담겨요'); $('#wFb').textContent=''; $('#wFb').className='fb';
+  $('#wMenu').querySelectorAll('.mi').forEach(b=>b.classList.remove('right','wrong'));
+  wDots(); wUI();
+}
+async function wCustomerOrders(){
+  W.step='serve'; wUI(); wSetCust(wLine(),'',!W.show);
+  await speak('Hi! '+sentence(W.order,true),{kind:'kid'});
+}
+buildMenu($('#wMenu'),FOODS.map(f=>f.id),(b,f)=>{
+  if(W.step!=='serve')return; const i=W.tray.indexOf(f);
+  if(i>=0)W.tray.splice(i,1); else{W.tray.push(f); speak(ttsName(f).replace(/^an? /,''),{rate:.9,kind:'waiter'})}
+  $('#wMenu').querySelectorAll('.mi').forEach(x=>x.setAttribute('aria-pressed',W.tray.some(t=>t.id===x.dataset.id)));
+  renderTray($('#wTray'),W.tray,'손님 쟁반','음식 그림을 누르면 담겨요'); wUI();
+});
+$('#wModel').onclick=()=>speak('What would you like?',{kind:'waiter'});
+$('#wSaid').onclick=()=>{$('#wHeard').textContent='좋아요! 손님의 주문을 잘 들어요.';wCustomerOrders()};
+$('#wMic').onclick=async()=>{
+  $('#wHeard').textContent='듣고 있어요…';
+  try{const alts=await listen($('#wMic'));
+    if(isAsk(alts)){$('#wMe').textContent=alts[0];$('#wHeard').textContent='잘 물어봤어요!';ding(true);wCustomerOrders()}
+    else{$('#wMe').textContent='What would you like?';$('#wHeard').textContent=`“${alts[0]}” 라고 들렸어요. 다시 말해 봐요.`;ding(false)}
+  }catch(e){$('#wHeard').textContent=micOK?errMsg(e):'소리 내어 말한 뒤 “말했어요”를 눌러요.';wUI()}
+};
+$('#wAgain').onclick=()=>speak(sentence(W.order,true),{kind:'kid'});
+$('#wSlow').onclick=()=>speak(sentence(W.order,true),{kind:'kid',rate:.65});
+$('#wShow').onclick=()=>{W.show=!W.show;$('#wCust').classList.toggle('blur',!W.show);wUI()};
+$('#wClear').onclick=()=>{W.tray=[];$('#wMenu').querySelectorAll('.mi').forEach(x=>x.setAttribute('aria-pressed','false'));renderTray($('#wTray'),[],'손님 쟁반','음식 그림을 누르면 담겨요');wUI()};
+$('#wServe').onclick=async()=>{
+  const ok=W.order.length===W.tray.length&&W.order.every(f=>W.tray.includes(f));
+  $('#wMe').textContent='Here you are.'; speak('Here you are.',{kind:'waiter'});
+  $('#wMenu').querySelectorAll('.mi').forEach(b=>{const id=b.dataset.id;b.setAttribute('aria-pressed','false');if(W.order.some(f=>f.id===id))b.classList.add('right');else if(W.tray.some(f=>f.id===id))b.classList.add('wrong')});
+  W.res[W.n]=ok; W.step='after'; W.n++; wDots(); wUI(); ding(ok);
+  $('#wFb').className='fb '+(ok?'y':'n');
+  $('#wFb').textContent=(ok?'완벽해요! ':'앗, 주문이 달라요. ')+`손님 주문: “${wLine()}” (${kos(W.order)})`;
+  wSetCust(ok?'Thank you! Yummy!':'Oops! '+wLine(),ok?'고마워요! 맛있겠다!':'어? 제 주문은 이거예요.',false);
+  await new Promise(r=>setTimeout(r,900));
+  speak(ok?'Thank you! Yummy!':'Oops! '+sentence(W.order,true),{kind:'kid'});
+  if(ok)addStar(2);
+  $('#wNext').textContent=W.n>=W.total?`다시 하기 ↺ (${W.res.filter(Boolean).length}/${W.total} 성공)`:'다음 손님 →';
+};
+$('#wNext').onclick=wNew;
+
+/* ---------- boot ---------- */
+syncMic(); lNew(); oControls(); wNew(); openTab(firstTab);
+</script>
