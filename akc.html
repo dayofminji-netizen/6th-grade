@@ -1,0 +1,1044 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AKC Korea Talk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Gowun+Dodum&family=Jua&display=swap">
+<style>
+/* AKC: 3 topics (Food / Sports / Hobbies) x 15 items. Random team draw (8~9 per topic) + sentence picker -> my writing -> presentation practice */
+:root{
+  --bg:#FFF6EC; --card:#FFFFFF; --ink:#2A2440; --soft:#6B6488; --line:#EADFD2;
+  --F:#F26B3A; --S:#2F5BEA; --H:#13A777; --yellow:#FFC93C; --on-accent:#FFFFFF;
+  --shadow:0 4px 0 rgba(42,36,64,.12);
+  --f-display:'Jua','Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --f-en:'Fredoka','Trebuchet MS',system-ui,sans-serif;
+  --f-body:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A1626; --card:#28223A; --ink:#F4F0FF; --soft:#B6AED3; --line:#3E3658;
+  --F:#FF8A5E; --S:#7F9CFF; --H:#3FD6A2; --yellow:#FFD45E; --on-accent:#1A1626;
+  --shadow:0 4px 0 rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A1626; --card:#28223A; --ink:#F4F0FF; --soft:#B6AED3; --line:#3E3658;
+  --F:#FF8A5E; --S:#7F9CFF; --H:#3FD6A2; --yellow:#FFD45E; --on-accent:#1A1626;
+  --shadow:0 4px 0 rgba(0,0,0,.35); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;padding:20px 16px 40px}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--S);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* header */
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.logo{width:84px;height:84px;flex:none;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.top .txt{flex:1;min-width:0}
+.top h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(28px,6vw,44px);line-height:1.1;text-wrap:balance}
+.top h1 small{display:block;font-family:var(--f-en);font-size:.48em;font-weight:500;color:var(--S);letter-spacing:.02em}
+.top p{margin:6px 0 0;color:var(--soft);max-width:60ch}
+
+/* buttons */
+.btn{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;box-shadow:var(--shadow)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.pri{background:var(--S);border-color:var(--S);color:var(--on-accent)}
+.btn.big{font-family:var(--f-display);font-weight:400;font-size:22px;padding:8px 26px;background:var(--F);border-color:var(--F);color:var(--on-accent)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+
+/* draw */
+.draw{background:var(--card);border:3px solid var(--yellow);border-radius:28px;padding:18px;box-shadow:var(--shadow);margin-bottom:20px;display:grid;gap:12px}
+.draw h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(24px,5.5vw,32px);line-height:1.15}
+.draw h2 small{font-family:var(--f-en);font-size:.5em;color:var(--S);font-weight:500;margin-left:6px}
+.draw p{margin:0;color:var(--soft)}
+.drawRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+@media (max-width:700px){.drawRow{grid-template-columns:minmax(0,1fr)}}
+.drawRow textarea{width:100%;min-height:150px;border:2px solid var(--line);border-radius:18px;background:var(--bg);padding:10px 14px;font:500 16px/1.5 var(--f-body);resize:vertical}
+.ctl{display:grid;gap:10px;align-content:start}
+.ctl label{display:flex;align-items:center;gap:8px;font-weight:700}
+.ctl input[type=number]{width:80px;border:2px solid var(--line);border-radius:12px;background:var(--bg);padding:6px 10px;font:600 18px var(--f-en)}
+.ctl input[type=checkbox]{width:22px;height:22px;accent-color:var(--H);flex:none;margin:0}
+.ctl .note{font-weight:400;color:var(--soft);font-size:14px}
+.groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.groups{grid-template-columns:minmax(0,1fr)}}
+.grp{--c:var(--F);border:3px solid var(--c);background:color-mix(in srgb,var(--c) 12%,var(--card));border-radius:22px;padding:12px;min-width:0}
+.grp h3{margin:0 0 8px;font-family:var(--f-display);font-weight:400;font-size:22px;display:flex;align-items:center;gap:8px}
+.grp h3 .n{margin-left:auto;font-family:var(--f-en);font-size:15px;background:var(--c);color:var(--on-accent);border-radius:999px;padding:0 10px}
+.names{display:flex;flex-wrap:wrap;gap:6px}
+.nm{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:3px 12px;font-weight:700;font-size:15px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nm small{font-weight:400;color:var(--soft);margin-left:4px}
+.nm.me{border-color:var(--c);background:var(--c);color:var(--on-accent)}
+.nm.me small{color:inherit}
+.groups.spin .nm{animation:wob .16s linear infinite}
+@keyframes wob{50%{transform:translateY(-3px) rotate(3deg)}}
+
+/* my banner */
+.mine{--c:var(--F);display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:color-mix(in srgb,var(--c) 18%,var(--card));border:3px solid var(--c);border-radius:22px;padding:10px 14px;margin-bottom:16px;font-weight:700}
+.mine[hidden]{display:none!important}
+.mine .big{font-family:var(--f-display);font-weight:400;font-size:22px}
+.mine .sp{flex:1}
+
+/* tabs + grid */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.tab{--c:var(--F);background:var(--card);border:3px solid var(--line);border-radius:999px;padding:6px 18px;font-family:var(--f-display);font-size:21px;display:flex;align-items:center;gap:6px}
+.tab small{font-family:var(--f-en);font-size:14px;color:var(--soft)}
+.tab[aria-selected="true"]{background:var(--c);border-color:var(--c);color:var(--on-accent)}
+.tab[aria-selected="true"] small{color:inherit}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:540px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+.tile{--c:var(--F);position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;
+  background:color-mix(in srgb,var(--c) 14%,var(--card));border:3px solid var(--c);border-radius:26px;padding:16px 8px 12px;box-shadow:var(--shadow);transition:transform .15s}
+.tile:hover{transform:translateY(-4px) rotate(-1deg)}
+.tile .em{font-size:44px;line-height:1.1}
+.tile .ko{font-family:var(--f-display);font-size:21px;line-height:1.2}
+.tile .en{font-family:var(--f-en);font-weight:500;font-size:13.5px;line-height:1.25;text-wrap:balance}
+.tile .tg{margin-top:6px;font-size:12px;background:var(--card);border-radius:999px;padding:1px 10px;color:var(--soft)}
+.tile .got{position:absolute;top:8px;right:8px;background:var(--H);color:var(--on-accent);border-radius:999px;font-family:var(--f-en);font-weight:600;font-size:12px;padding:0 8px}
+.tile .star{position:absolute;top:6px;left:8px;font-size:12px;font-weight:700;background:var(--yellow);color:#2A2440;border-radius:999px;padding:0 8px}
+.foot{margin-top:28px;color:var(--soft);font-size:14px;text-align:center}
+
+/* detail sheet */
+.sheet{position:fixed;inset:0;background:var(--bg);overflow-y:auto;z-index:10;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+.sheet[hidden]{display:none!important}
+.bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg);border-bottom:2px solid var(--line)}
+.bar .sp{flex:1}
+.detail{max-width:780px;margin:0 auto;padding:18px 16px 0}
+.hero{--c:var(--F);display:flex;gap:16px;align-items:center;background:color-mix(in srgb,var(--c) 18%,var(--card));border:3px solid var(--c);border-radius:28px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:16px}
+.hero .em{font-size:64px;line-height:1}
+.hero .t{min-width:0}
+.hero h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:clamp(30px,7vw,42px);line-height:1.1}
+.hero .en{font-family:var(--f-en);font-weight:600;font-size:clamp(18px,4.5vw,24px);line-height:1.2;margin-top:2px}
+.pill{display:inline-block;margin-top:6px;background:var(--card);border-radius:999px;padding:2px 12px;font-size:13.5px;color:var(--soft)}
+.namebox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--card);border:2px solid var(--line);border-radius:18px;padding:10px 14px;margin-bottom:16px}
+.namebox label{font-weight:700}
+.namebox input{flex:1;min-width:150px;border:2px solid var(--line);border-radius:12px;background:var(--bg);padding:6px 12px;font:500 18px var(--f-en)}
+.hint{color:var(--soft);margin:0 0 14px}
+.step{margin-bottom:22px}
+.step h3{margin:0 0 10px;font-family:var(--f-display);font-weight:400;font-size:24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.step h3 .num{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--c,var(--F));color:var(--on-accent);font-family:var(--f-en);font-size:18px;font-weight:600}
+.step h3 small{font-family:var(--f-body);font-size:15px;color:var(--soft)}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:flex-start;gap:8px;background:var(--card);border:3px solid var(--line);border-radius:20px;padding:10px 10px 10px 14px;box-shadow:var(--shadow);transition:border-color .15s}
+.opt.on{border-color:var(--c,var(--F));background:color-mix(in srgb,var(--c,var(--F)) 9%,var(--card))}
+.opt label{flex:1;min-width:0;display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.opt input{width:24px;height:24px;margin:4px 0 0;flex:none;accent-color:var(--c,var(--F))}
+.opt .tx{display:grid;gap:2px;min-width:0}
+.opt .e{font-family:var(--f-en);font-weight:500;font-size:clamp(17px,4.2vw,20px);line-height:1.35}
+.opt .k{color:var(--soft);font-size:15px}
+.say{flex:none;background:var(--bg);border:2px solid var(--line);border-radius:50%;width:40px;height:40px;font-size:18px;display:grid;place-items:center}
+.own{display:grid;gap:6px;margin-top:10px}
+.own label{font-weight:700}
+.own textarea{width:100%;min-height:70px;border:2px dashed var(--line);border-radius:16px;background:var(--card);padding:10px 12px;font:500 18px/1.4 var(--f-en);resize:vertical}
+
+/* dock + tray */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:12;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:3px solid var(--H);display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.dock[hidden]{display:none!important}
+.dock .cnt{font-weight:700}
+.tray{position:fixed;inset:0;z-index:20;background:rgba(10,8,20,.55);display:flex;align-items:flex-end;justify-content:center}
+.tray[hidden]{display:none!important}
+.tray .box{background:var(--bg);width:min(760px,100%);max-height:90%;overflow-y:auto;border-radius:28px 28px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:grid;gap:12px}
+.tray h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:24px}
+.tray textarea{width:100%;min-height:260px;border:2px solid var(--line);border-radius:16px;background:var(--card);padding:12px;font:500 17px/1.55 var(--f-en);resize:vertical}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:700}
+.chip[aria-pressed="true"]{background:var(--S);border-color:var(--S);color:var(--on-accent)}
+.stat{color:var(--soft);font-weight:700}
+
+/* presentation stage */
+.stage{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.stage[hidden]{display:none!important}
+.stage .bar2{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.stage .bar2 .sp{flex:1}
+.stage .pg{font-family:var(--f-en);font-weight:600;color:var(--soft)}
+.stage .card{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:18px;max-width:900px;margin:0 auto;width:100%;min-height:0}
+.stage .se{font-family:var(--f-en);font-weight:500;font-size:clamp(28px,6vw,52px);line-height:1.3;text-wrap:balance}
+.stage .sk{color:var(--soft);font-size:clamp(17px,3.5vw,24px)}
+.stage .prog{height:10px;background:var(--line);border-radius:999px;overflow:hidden}
+.stage .prog b{display:block;height:100%;background:var(--H);transition:width .2s}
+.stage .nav{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.stage .nav .btn{font-size:20px;padding:8px 22px}
+
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-weight:700;max-width:calc(100% - 32px);text-align:center;pointer-events:none}
+.toast[hidden]{display:none!important}
+
+#print{display:none}
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  body>*:not(#print){display:none!important}
+  #print{display:block;font:15px/1.6 'Gowun Dodum',sans-serif}
+  #print h1{font-size:22px;margin:0 0 4px}
+  #print p{margin:0 0 12px}
+  #print .k{color:#555;font-size:13px;display:block}
+  #print .lines{border-bottom:1px solid #999;height:28px}
+  #print .g{border:2px solid #000;border-radius:10px;padding:8px 12px;margin-bottom:12px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap" id="home">
+  <header class="top">
+    <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="52" r="40" fill="#FFF7E8" stroke="#2A2440" stroke-width="3.5"/>
+      <path d="M50 12a40 40 0 0 1 0 80a20 20 0 0 1 0-40a20 20 0 0 0 0-40z" fill="#E8484F" opacity=".9"/>
+      <path d="M50 92a40 40 0 0 1 0-80a20 20 0 0 1 0 40a20 20 0 0 0 0 40z" fill="#2F5BEA" opacity=".9"/>
+      <circle cx="38" cy="50" r="4.5" fill="#fff"/><circle cx="62" cy="50" r="4.5" fill="#fff"/>
+      <path d="M41 64q9 8 18 0" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+    </svg>
+    <div class="txt">
+      <h1>Let's Talk About Korea!<small>AKC 발표 준비 · Food · Sports · Hobbies</small></h1>
+      <p>한국의 음식, 스포츠, 취미 중 하나를 맡아 영어 글을 쓰고 발표해요. 마음에 드는 카드를 누르고, 문장을 골라서 나만의 글을 완성해 보세요!<br>Pick a card, choose sentences, and build your own speech.</p>
+    </div>
+  </header>
+
+  <section class="draw" aria-labelledby="drawT">
+    <h2 id="drawT">🎲 주제 랜덤 배정 <small>Topic Draw</small></h2>
+    <p>학생 이름을 한 줄에 한 명씩 쓰고 버튼을 누르면 <b>음식 · 스포츠 · 취미</b> 세 모둠으로 고르게 (25명이면 9·8·8명) 나눠져요. 이름을 안 쓰면 번호로 나눠요.</p>
+    <div class="drawRow">
+      <div>
+        <label for="names" class="sr">학생 이름 Names</label>
+        <textarea id="names" placeholder="학생 이름을 한 줄에 한 명씩 (또는 쉼표로)&#10;김민준&#10;이서연&#10;박지호&#10;…"></textarea>
+      </div>
+      <div class="ctl">
+        <label for="count">인원 수 <input id="count" type="number" min="3" max="60" value="25"> 명 <span class="note" id="cntNote"></span></label>
+        <label><input type="checkbox" id="uniq"> 모둠 안에서 세부 주제(예: 김치, 축구)도 겹치지 않게 뽑아 주기</label>
+        <button class="btn big" id="assign">🎲 랜덤 배정!</button>
+        <p class="note" id="drawInfo"></p>
+      </div>
+    </div>
+    <div class="groups" id="groups" aria-live="polite"></div>
+    <div class="seg" id="grpBtns" hidden>
+      <button class="btn" id="copyGroups">📋 결과 복사 Copy</button>
+      <button class="btn" id="printGroups">🖨️ 인쇄 Print</button>
+      <button class="btn" id="clearGroups">🗑️ 지우기 Clear</button>
+    </div>
+    <p class="note" id="grpHint" hidden style="color:var(--soft)">👆 결과에서 <b>내 이름</b>을 누르면 내 주제로 바로 갈 수 있어요. Tap your name!</p>
+  </section>
+
+  <div class="mine" id="mine" hidden></div>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="주제 Topics"></nav>
+  <main class="grid" id="grid"></main>
+  <p class="foot">3 topics × 15 ideas · 고른 문장은 이 기기에 저장돼요 (Saved on this device)</p>
+</div>
+
+<section class="sheet" id="sheet" hidden>
+  <div class="bar">
+    <button class="btn" id="back">← 목록 Back</button>
+    <span class="sp"></span>
+    <button class="btn" id="prev" aria-label="이전 Previous">◀</button>
+    <button class="btn" id="next" aria-label="다음 Next">▶</button>
+  </div>
+  <div class="detail" id="detail"></div>
+</section>
+
+<div class="dock" id="dock" hidden>
+  <span class="cnt" id="dockTxt"></span>
+  <button class="btn pri" id="openTray">✍️ 내 글 보기 My Writing</button>
+  <button class="btn" id="openStage2">🎤 발표 연습 Practice</button>
+</div>
+
+<div class="tray" id="tray" hidden>
+  <div class="box" role="dialog" aria-modal="true" aria-labelledby="trayT">
+    <div class="seg" style="align-items:center">
+      <h3 id="trayT" style="flex:1">✍️ 내 발표 글 · My Writing</h3>
+      <button class="btn" id="closeTray">닫기 Close</button>
+    </div>
+    <div class="seg">
+      <button class="chip" id="mEn" aria-pressed="true">English</button>
+      <button class="chip" id="mBoth" aria-pressed="false">English + 한국어</button>
+      <span class="stat" id="stat"></span>
+    </div>
+    <textarea id="writing" aria-label="My writing"></textarea>
+    <p class="hint" style="margin:0">여기서 글을 직접 고쳐도 돼요. 다 고치면 복사하거나 인쇄해서 발표 연습을 해요. (문장을 다시 고르면 새로 만들어져요.)</p>
+    <div class="seg">
+      <button class="btn pri" id="copyW">📋 복사 Copy</button>
+      <button class="btn" id="listenW">🔊 전체 듣기 Listen</button>
+      <button class="btn" id="stopW">⏹ 멈춤 Stop</button>
+      <button class="btn" id="openStage">🎤 발표 연습 Practice</button>
+      <button class="btn" id="printW">🖨️ 인쇄 Print</button>
+    </div>
+  </div>
+</div>
+
+<div class="stage" id="stage" hidden role="dialog" aria-modal="true" aria-label="발표 연습 Presentation practice">
+  <div class="bar2">
+    <button class="btn" id="closeStage">✕ 닫기</button>
+    <span class="sp"></span>
+    <button class="chip" id="koToggle" aria-pressed="true">한국어 보기</button>
+    <span class="pg" id="pg"></span>
+  </div>
+  <div class="card">
+    <div class="se" id="se"></div>
+    <div class="sk" id="sk"></div>
+  </div>
+  <div class="prog"><b id="progB"></b></div>
+  <div class="nav">
+    <button class="btn" id="sPrev" aria-label="이전">◀</button>
+    <button class="btn pri" id="sSay">🔊 듣기</button>
+    <button class="btn" id="sSlow">🐢 천천히</button>
+    <button class="btn" id="sNext" aria-label="다음">▶</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+<div id="print"></div>
+
+<script>
+/* ================= DATA ================= */
+const CAT={
+  F:{ko:'음식',en:'Food',em:'🍚',c:'var(--F)'},
+  S:{ko:'스포츠',en:'Sports',em:'⚽',c:'var(--S)'},
+  H:{ko:'취미',en:'Hobbies',em:'🎨',c:'var(--H)'}
+};
+const ORDER=['F','S','H'];
+
+/* Templates. {me}=my name, {n}=English name, {ko}=Korean name, {ko:을/를}=Korean name + particle */
+const T={
+ F:{
+  intro:[
+   ["Hello, everyone. My name is {me}. Today, I will introduce a Korean food, {n}.","안녕하세요, 여러분. 제 이름은 {me}입니다. 오늘은 한국 음식 {ko:을/를} 소개할게요."],
+   ["Hi! I'm {me}. Are you hungry? Let me tell you about {n}!","안녕하세요! 저는 {me}입니다. 배고프지 않나요? {ko}에 대해 이야기해 줄게요!"],
+   ["Good morning, everyone. I'm {me}. What is your favorite food? Mine is {n}!","좋은 아침이에요, 여러분. 저는 {me}입니다. 여러분이 가장 좋아하는 음식은 무엇인가요? 저는 {ko:이에요/예요}!"]],
+  my:[
+   ["I like {n} because it is delicious.","{ko:은/는} 맛있어서 좋아요."],
+   ["{n} is not just food. It is a part of Korean culture.","{ko:은/는} 그냥 음식이 아니에요. 한국 문화의 한 부분이에요."],
+   ["When I eat {n}, I feel happy.","{ko:을/를} 먹으면 행복해요."]],
+  end:[
+   ["If you come to Korea, please try {n}. Thank you for listening!","한국에 오면 {ko:을/를} 꼭 먹어 보세요. 들어 주셔서 감사합니다!"],
+   ["I hope you can taste {n} someday. Thank you!","언젠가 여러분도 {ko:을/를} 맛볼 수 있으면 좋겠어요. 감사합니다!"],
+   ["{n} is the best! Thank you for listening.","{ko:이/가} 최고예요! 들어 주셔서 감사합니다."]]
+ },
+ S:{
+  intro:[
+   ["Hello, everyone. My name is {me}. Today, I will introduce a popular sport in Korea, {n}.","안녕하세요, 여러분. 제 이름은 {me}입니다. 오늘은 한국에서 인기 있는 스포츠, {ko:을/를} 소개할게요."],
+   ["Hi! I'm {me}. Do you like sports? Let me tell you about {n}!","안녕하세요! 저는 {me}입니다. 운동을 좋아하나요? {ko}에 대해 이야기해 줄게요!"],
+   ["Good morning, everyone. I'm {me}. What is your favorite sport? Mine is {n}!","좋은 아침이에요, 여러분. 저는 {me}입니다. 여러분이 가장 좋아하는 운동은 무엇인가요? 저는 {ko:이에요/예요}!"]],
+  my:[
+   ["I like {n} because it is exciting.","{ko:은/는} 신나서 좋아요."],
+   ["{n} is good for our body and mind.","{ko:은/는} 몸과 마음에 좋아요."],
+   ["When I watch Korean players, I feel proud of Korea.","한국 선수들을 보면 한국이 자랑스러워요."]],
+  end:[
+   ["If you come to Korea, please try {n}. Thank you for listening!","한국에 오면 {ko:을/를} 꼭 해 보세요. 들어 주셔서 감사합니다!"],
+   ["Let's try {n} together someday! Thank you!","언젠가 같이 {ko:을/를} 해 봐요! 감사합니다!"],
+   ["Let's cheer for Korean players together! Thank you for listening.","함께 한국 선수들을 응원해요! 들어 주셔서 감사합니다."]]
+ },
+ H:{
+  intro:[
+   ["Hello, everyone. My name is {me}. Today, I will introduce a fun hobby in Korea, {n}.","안녕하세요, 여러분. 제 이름은 {me}입니다. 오늘은 한국의 재미있는 취미, {ko:을/를} 소개할게요."],
+   ["Hi! I'm {me}. What do you do in your free time? Let me tell you about {n}!","안녕하세요! 저는 {me}입니다. 여러분은 쉬는 시간에 무엇을 하나요? {ko}에 대해 이야기해 줄게요!"],
+   ["Good morning, everyone. I'm {me}. What is your favorite hobby? Mine is {n}!","좋은 아침이에요, 여러분. 저는 {me}입니다. 여러분이 가장 좋아하는 취미는 무엇인가요? 저는 {ko:이에요/예요}!"]],
+  my:[
+   ["I like {n} because it is fun.","{ko:은/는} 재미있어서 좋아요."],
+   ["It is a great way to spend time with friends and family.","친구, 가족과 함께 시간을 보내기 좋은 방법이에요."],
+   ["{n} helps me relax after school.","{ko:은/는} 학교가 끝난 뒤 쉬는 데 도움이 돼요."]],
+  end:[
+   ["If you come to Korea, please try {n}. Thank you for listening!","한국에 오면 {ko:을/를} 꼭 해 보세요. 들어 주셔서 감사합니다!"],
+   ["Let's try {n} together someday! Thank you!","언젠가 같이 {ko:을/를} 해 봐요! 감사합니다!"],
+   ["{n} is the best! Thank you for listening.","{ko:이/가} 최고예요! 들어 주셔서 감사합니다."]]
+ }
+};
+
+/* Items: id, cat, emoji, ko, en (title), n (name used in sentences), tag, f = facts, m = my story */
+const I=[
+/* ---------- FOOD ---------- */
+{id:'kimchi',cat:'F',em:'🥬',ko:'김치',en:'Kimchi',n:'kimchi',tag:'매콤한 반찬',
+ f:[["Kimchi is a famous Korean side dish.","김치는 유명한 한국 반찬이에요."],
+    ["It is made with cabbage, red pepper powder, and garlic.","배추, 고춧가루, 마늘로 만들어요."],
+    ["It tastes spicy and a little sour.","맵고 조금 새콤한 맛이 나요."],
+    ["Koreans eat kimchi with almost every meal.","한국 사람들은 거의 매 끼니 김치를 먹어요."],
+    ["In late fall, families make a lot of kimchi together. This is called gimjang.","늦가을에 가족이 함께 김치를 많이 담가요. 이것을 김장이라고 해요."],
+    ["Kimchi is healthy food for our body.","김치는 몸에 좋은 건강한 음식이에요."]],
+ m:[["My grandmother makes the best kimchi.","우리 할머니는 김치를 제일 맛있게 만드세요."],
+    ["I like kimchi fried rice the most.","저는 김치볶음밥을 제일 좋아해요."]]},
+{id:'bibimbap',cat:'F',em:'🍲',ko:'비빔밥',en:'Bibimbap',n:'bibimbap',tag:'비벼 먹는 밥',
+ f:[["Bibimbap means “mixed rice.”","비빔밥은 ‘비빈 밥’이라는 뜻이에요."],
+    ["It is rice with many colorful vegetables on top.","밥 위에 알록달록한 채소가 많이 올라가요."],
+    ["People often put a fried egg and some meat on it too.","달걀 프라이와 고기도 자주 올려요."],
+    ["We add gochujang, a red pepper paste.","빨간 고추장을 넣어요."],
+    ["Then we mix everything with a spoon.","그리고 숟가락으로 모두 비벼요."],
+    ["Jeonju is a city famous for bibimbap.","전주는 비빔밥으로 유명한 도시예요."]],
+ m:[["I like bibimbap because it is healthy and colorful.","저는 건강하고 색이 예뻐서 비빔밥을 좋아해요."],
+    ["I make bibimbap with my mom at home.","저는 집에서 엄마와 비빔밥을 만들어요."]]},
+{id:'bulgogi',cat:'F',em:'🥩',ko:'불고기',en:'Bulgogi',n:'bulgogi',tag:'달콤한 고기',
+ f:[["Bulgogi means “fire meat.”","불고기는 ‘불에 구운 고기’라는 뜻이에요."],
+    ["It is made with thin slices of beef.","얇게 썬 소고기로 만들어요."],
+    ["The meat is sweet because of soy sauce, sugar, and pear juice.","간장, 설탕, 배즙 때문에 고기가 달콤해요."],
+    ["We cook it on a grill or in a pan.","그릴이나 팬에 구워요."],
+    ["We often wrap it in lettuce.","상추에 싸서 먹기도 해요."],
+    ["Many people from other countries love bulgogi.","다른 나라 사람들도 불고기를 아주 좋아해요."]],
+ m:[["Bulgogi is my favorite food on my birthday.","불고기는 제 생일에 제일 좋아하는 음식이에요."],
+    ["It is not spicy, so little kids can eat it too.","맵지 않아서 어린아이들도 먹을 수 있어요."]]},
+{id:'tteokbokki',cat:'F',em:'🌶️',ko:'떡볶이',en:'Tteokbokki',n:'tteokbokki',tag:'매운 떡 간식',
+ f:[["Tteokbokki is a popular Korean street food.","떡볶이는 인기 있는 한국 길거리 음식이에요."],
+    ["It is made with soft rice cakes.","말랑한 떡으로 만들어요."],
+    ["The sauce is red, sweet, and spicy.","소스는 빨갛고 달고 매워요."],
+    ["Fish cakes and boiled eggs are often in it too.","어묵과 삶은 달걀도 자주 들어가요."],
+    ["Students love to eat it after school.","학생들은 학교가 끝나고 떡볶이 먹는 걸 좋아해요."],
+    ["There is also a non-spicy kind made with soy sauce.","간장으로 만든 맵지 않은 떡볶이도 있어요."]],
+ m:[["I eat tteokbokki with my friends after school.","저는 학교가 끝나면 친구들과 떡볶이를 먹어요."],
+    ["It is very spicy, but I can't stop eating it!","아주 맵지만 멈출 수가 없어요!"]]},
+{id:'gimbap',cat:'F',em:'🍙',ko:'김밥',en:'Gimbap',n:'gimbap',tag:'소풍 도시락',
+ f:[["Gimbap is rice rolled in dried seaweed.","김밥은 김에 밥을 돌돌 만 음식이에요."],
+    ["“Gim” means seaweed, and “bap” means rice.","‘김’은 seaweed, ‘밥’은 rice라는 뜻이에요."],
+    ["It has egg, carrot, spinach, and ham inside.","안에 달걀, 당근, 시금치, 햄이 들어가요."],
+    ["We cut it into small round pieces.","작고 동그랗게 잘라요."],
+    ["It is easy to carry, so we take it on picnics.","들고 다니기 쉬워서 소풍 때 가져가요."],
+    ["You can buy gimbap at many shops in Korea.","한국에서는 많은 가게에서 김밥을 살 수 있어요."]],
+ m:[["My mom makes gimbap for every school field trip.","엄마는 현장 체험 학습 때마다 김밥을 싸 주세요."],
+    ["I like tuna gimbap the most.","저는 참치 김밥을 제일 좋아해요."]]},
+{id:'samgyeopsal',cat:'F',em:'🥓',ko:'삼겹살',en:'Samgyeopsal',n:'samgyeopsal',tag:'구워 먹는 고기',
+ f:[["Samgyeopsal is grilled pork belly.","삼겹살은 구운 돼지고기 뱃살이에요."],
+    ["“Sam” means three. The meat has three layers.","‘삼’은 셋이라는 뜻이에요. 고기에 세 겹이 있어요."],
+    ["We grill it on the table ourselves.","식탁에서 직접 구워요."],
+    ["We wrap the meat in lettuce with garlic and sauce.","상추에 마늘과 쌈장을 넣어 고기를 싸요."],
+    ["This wrap is called ssam.","이렇게 싼 것을 쌈이라고 해요."],
+    ["Families and friends eat it together for dinner.","가족과 친구들이 저녁으로 함께 먹어요."]],
+ m:[["My family eats samgyeopsal on weekends.","우리 가족은 주말에 삼겹살을 먹어요."],
+    ["I love the sizzling sound on the grill.","저는 지글지글 굽는 소리가 정말 좋아요."]]},
+{id:'japchae',cat:'F',em:'🥢',ko:'잡채',en:'Japchae',n:'japchae',tag:'잔치 국수 요리',
+ f:[["Japchae is glass noodles with vegetables.","잡채는 채소와 함께 만든 당면 요리예요."],
+    ["The noodles are made from sweet potatoes.","당면은 고구마로 만들어요."],
+    ["They are clear and chewy.","투명하고 쫄깃해요."],
+    ["We mix them with soy sauce and sesame oil.","간장과 참기름으로 버무려요."],
+    ["It has spinach, carrots, onions, and mushrooms.","시금치, 당근, 양파, 버섯이 들어가요."],
+    ["Koreans eat japchae on birthdays and holidays.","한국 사람들은 생일과 명절에 잡채를 먹어요."]],
+ m:[["I like japchae because the noodles are chewy.","면이 쫄깃해서 잡채를 좋아해요."],
+    ["My grandma always makes japchae on Chuseok.","할머니는 추석마다 잡채를 만드세요."]]},
+{id:'naengmyeon',cat:'F',em:'🧊',ko:'냉면',en:'Naengmyeon',n:'naengmyeon',tag:'시원한 국수',
+ f:[["Naengmyeon means “cold noodles.”","냉면은 ‘차가운 국수’라는 뜻이에요."],
+    ["The noodles are long and thin.","면이 길고 가늘어요."],
+    ["They are served in icy cold soup.","아주 차가운 국물에 담겨 나와요."],
+    ["There is also a spicy kind called bibim-naengmyeon.","매콤한 비빔냉면도 있어요."],
+    ["People add vinegar and mustard.","식초와 겨자를 넣어 먹어요."],
+    ["It is a great food for hot summer days.","더운 여름날에 딱 좋은 음식이에요."]],
+ m:[["I eat naengmyeon when it is very hot outside.","저는 밖이 아주 더울 때 냉면을 먹어요."],
+    ["The noodles are so long that we cut them with scissors!","면이 너무 길어서 가위로 잘라요!"]]},
+{id:'samgyetang',cat:'F',em:'🥣',ko:'삼계탕',en:'Samgyetang',n:'samgyetang',tag:'여름 보양식',
+ f:[["Samgyetang is ginseng chicken soup.","삼계탕은 인삼이 들어간 닭고기 수프예요."],
+    ["A whole small chicken is in one bowl.","작은 닭 한 마리가 통째로 한 그릇에 들어가요."],
+    ["The chicken is filled with rice, garlic, and jujubes.","닭 속에 쌀, 마늘, 대추를 넣어요."],
+    ["Ginseng is a root that is good for our health.","인삼은 건강에 좋은 뿌리예요."],
+    ["Koreans eat it on the hottest days of summer.","한국 사람들은 가장 더운 여름날에 삼계탕을 먹어요."],
+    ["People say hot soup gives us energy.","뜨거운 국물이 힘을 준다고 해요."]],
+ m:[["I feel strong after I eat samgyetang.","삼계탕을 먹으면 힘이 나요."],
+    ["I eat it on Boknal with my family.","복날에 가족과 함께 먹어요."]]},
+{id:'chicken',cat:'F',em:'🍗',ko:'치킨',en:'Korean Fried Chicken',n:'Korean fried chicken',tag:'바삭한 치킨',
+ f:[["Korean fried chicken is famous all over the world.","한국 치킨은 전 세계에서 유명해요."],
+    ["It is very crispy on the outside.","겉이 아주 바삭해요."],
+    ["Yangnyeom chicken has a sweet and spicy sauce.","양념치킨은 달고 매운 소스가 있어요."],
+    ["Many people order chicken for delivery.","많은 사람들이 배달로 치킨을 시켜요."],
+    ["It comes with pickled radish.","치킨무가 같이 나와요."],
+    ["People like to eat it while watching sports games.","스포츠 경기를 보면서 먹는 걸 좋아해요."]],
+ m:[["My family orders chicken every Friday night.","우리 가족은 금요일 밤마다 치킨을 시켜요."],
+    ["I like half fried, half yangnyeom chicken.","저는 반반 치킨을 좋아해요."]]},
+{id:'ramyeon',cat:'F',em:'🍜',ko:'라면',en:'Ramyeon',n:'ramyeon',tag:'꼬불꼬불 면',
+ f:[["Ramyeon is Korean instant noodles.","라면은 한국의 인스턴트 국수예요."],
+    ["It is ready in about four minutes.","약 4분이면 완성돼요."],
+    ["Most Korean ramyeon is spicy.","한국 라면은 대부분 매워요."],
+    ["People add eggs, green onions, or cheese.","달걀, 파, 치즈를 넣기도 해요."],
+    ["Koreans eat a lot of ramyeon.","한국 사람들은 라면을 아주 많이 먹어요."],
+    ["Many people try it after watching Korean dramas.","한국 드라마를 보고 라면을 먹어 보는 사람이 많아요."]],
+ m:[["I can cook ramyeon by myself.","저는 혼자서 라면을 끓일 수 있어요."],
+    ["Ramyeon tastes best on a cold, rainy day.","춥고 비 오는 날 라면이 제일 맛있어요."]]},
+{id:'hotteok',cat:'F',em:'🥞',ko:'호떡',en:'Hotteok',n:'hotteok',tag:'달콤한 겨울 간식',
+ f:[["Hotteok is a sweet Korean pancake.","호떡은 달콤한 한국식 팬케이크예요."],
+    ["It is filled with brown sugar, honey, and nuts.","안에 흑설탕, 꿀, 견과류가 들어 있어요."],
+    ["It is cooked in a pan until it is golden.","노릇노릇해질 때까지 팬에 구워요."],
+    ["People sell it at street stalls in winter.","겨울에 길거리 가게에서 팔아요."],
+    ["The inside is very hot, so be careful!","안이 아주 뜨거우니까 조심하세요!"],
+    ["Busan is famous for hotteok with seeds inside.","부산은 씨앗이 들어간 씨앗호떡으로 유명해요."]],
+ m:[["I buy hotteok on my way home in winter.","겨울에 집에 가는 길에 호떡을 사 먹어요."],
+    ["It warms my hands and my heart.","손도 마음도 따뜻해져요."]]},
+{id:'bungeoppang',cat:'F',em:'🐟',ko:'붕어빵',en:'Bungeoppang',n:'bungeoppang',tag:'물고기 모양 빵',
+ f:[["Bungeoppang is a fish-shaped bread.","붕어빵은 물고기 모양 빵이에요."],
+    ["“Bungeo” is the name of a fish.","‘붕어’는 물고기 이름이에요."],
+    ["But there is no fish inside!","하지만 안에 물고기는 없어요!"],
+    ["It is filled with sweet red bean paste.","달콤한 팥소가 들어 있어요."],
+    ["Some have cream or pizza filling too.","슈크림이나 피자 맛도 있어요."],
+    ["It is a popular winter snack.","인기 있는 겨울 간식이에요."]],
+ m:[["I always eat the head first. Which part do you eat first?","저는 항상 머리부터 먹어요. 여러분은 어디부터 먹나요?"],
+    ["I like cream bungeoppang more than red bean.","저는 팥보다 슈크림 붕어빵이 더 좋아요."]]},
+{id:'patbingsu',cat:'F',em:'🍧',ko:'팥빙수',en:'Patbingsu',n:'patbingsu',tag:'여름 얼음 디저트',
+ f:[["Patbingsu is a Korean shaved ice dessert.","팥빙수는 한국의 얼음 디저트예요."],
+    ["The ice is soft like snow.","얼음이 눈처럼 부드러워요."],
+    ["It has sweet red beans on top.","위에 달콤한 팥이 올라가요."],
+    ["People also add rice cakes, milk, and fruit.","떡, 우유, 과일도 넣어요."],
+    ["There are many kinds, like mango bingsu and strawberry bingsu.","망고 빙수, 딸기 빙수처럼 종류가 많아요."],
+    ["It is big, so friends share one bowl.","커서 친구들과 한 그릇을 나눠 먹어요."]],
+ m:[["I eat bingsu with my friends in summer.","여름에 친구들과 빙수를 먹어요."],
+    ["My favorite is mango bingsu.","제가 제일 좋아하는 건 망고 빙수예요."]]},
+{id:'kimchijjigae',cat:'F',em:'🥘',ko:'김치찌개',en:'Kimchi-jjigae',n:'kimchi-jjigae',tag:'따끈한 찌개',
+ f:[["Kimchi-jjigae is kimchi stew.","김치찌개는 김치로 만든 찌개예요."],
+    ["It is made with old, sour kimchi.","오래되어 신 김치로 만들어요."],
+    ["Pork and tofu are also in it.","돼지고기와 두부도 들어가요."],
+    ["It is hot, spicy, and a little sour.","뜨겁고 맵고 조금 새콤해요."],
+    ["We eat it with a bowl of rice.","밥 한 공기와 함께 먹어요."],
+    ["It is a favorite home meal for many Koreans.","많은 한국 사람이 좋아하는 집밥이에요."]],
+ m:[["My dad's kimchi-jjigae is the best.","우리 아빠의 김치찌개가 최고예요."],
+    ["It keeps me warm on cold days.","추운 날 몸을 따뜻하게 해 줘요."]]},
+
+/* ---------- SPORTS ---------- */
+{id:'taekwondo',cat:'S',em:'🥋',ko:'태권도',en:'Taekwondo',n:'taekwondo',tag:'한국의 무술',
+ f:[["Taekwondo is a Korean martial art.","태권도는 한국의 무술이에요."],
+    ["“Tae” means kick, and “kwon” means punch.","‘태’는 발차기, ‘권’은 주먹이라는 뜻이에요."],
+    ["People wear a white uniform called a dobok.","도복이라는 흰 옷을 입어요."],
+    ["The color of your belt shows your level.","띠 색깔이 실력을 보여 줘요."],
+    ["Taekwondo is an Olympic sport.","태권도는 올림픽 종목이에요."],
+    ["Millions of people around the world learn it.","전 세계 수많은 사람이 태권도를 배워요."]],
+ m:[["I have a black belt in taekwondo.","저는 태권도 검은 띠예요."],
+    ["Taekwondo makes me strong and brave.","태권도는 저를 강하고 용감하게 만들어요."]]},
+{id:'ssireum',cat:'S',em:'🤼',ko:'씨름',en:'Ssireum',n:'ssireum',tag:'전통 레슬링',
+ f:[["Ssireum is Korean traditional wrestling.","씨름은 한국 전통 레슬링이에요."],
+    ["Two players hold each other's belt, called a satba.","두 선수가 샅바라는 띠를 서로 잡아요."],
+    ["They play in a circle of sand.","모래판 위에서 경기해요."],
+    ["If your body above the knee touches the ground, you lose.","무릎 위 몸이 땅에 닿으면 져요."],
+    ["The best player gets the title “Cheonha Jangsa.”","가장 잘한 선수는 ‘천하장사’가 돼요."],
+    ["Ssireum is a UNESCO cultural heritage.","씨름은 유네스코 인류무형문화유산이에요."]],
+ m:[["I played ssireum with my friends on sports day.","운동회 날 친구들과 씨름을 했어요."],
+    ["Ssireum needs strength and good balance.","씨름은 힘과 좋은 균형 감각이 필요해요."]]},
+{id:'taekkyeon',cat:'S',em:'🦵',ko:'택견',en:'Taekkyeon',n:'taekkyeon',tag:'춤 같은 무술',
+ f:[["Taekkyeon is a very old Korean martial art.","택견은 아주 오래된 한국 무술이에요."],
+    ["The moves look like a soft dance.","동작이 부드러운 춤처럼 보여요."],
+    ["Players move their feet in a triangle step.","선수들은 삼각형 모양으로 발을 움직여요."],
+    ["They use kicks and trips more than punches.","주먹보다 발차기와 걸기를 더 많이 써요."],
+    ["Players say “ik-ku!” when they move.","움직일 때 ‘이크!’ 하고 소리를 내요."],
+    ["Taekkyeon is a UNESCO cultural heritage.","택견은 유네스코 인류무형문화유산이에요."]],
+ m:[["I learned the triangle step in P.E. class.","체육 시간에 품밟기를 배웠어요."],
+    ["I think taekkyeon is beautiful and strong.","택견은 아름답고 강하다고 생각해요."]]},
+{id:'soccer',cat:'S',em:'⚽',ko:'축구',en:'Soccer',n:'soccer',tag:'월드컵 4강',
+ f:[["Soccer is one of the most popular sports in Korea.","축구는 한국에서 가장 인기 있는 스포츠 중 하나예요."],
+    ["Two teams try to kick the ball into the goal.","두 팀이 공을 골대에 차 넣으려고 해요."],
+    ["Korea hosted the World Cup in 2002.","한국은 2002년에 월드컵을 열었어요."],
+    ["That year, the Korean team reached the semi-finals.","그해 한국 팀은 4강까지 올라갔어요."],
+    ["Son Heung-min is a famous Korean soccer player.","손흥민은 유명한 한국 축구 선수예요."],
+    ["Fans shout “Dae-han-min-guk!”","팬들은 “대~한민국!”을 외쳐요."]],
+ m:[["I play soccer at lunchtime with my classmates.","점심시간에 반 친구들과 축구를 해요."],
+    ["My dream is to play like Son Heung-min.","제 꿈은 손흥민처럼 경기하는 거예요."]]},
+{id:'baseball',cat:'S',em:'⚾',ko:'야구',en:'Baseball',n:'baseball',tag:'신나는 응원',
+ f:[["Baseball is a very popular sport in Korea.","야구는 한국에서 아주 인기 있는 스포츠예요."],
+    ["The Korean pro league, the KBO, has ten teams.","한국 프로 리그 KBO에는 10개 팀이 있어요."],
+    ["Fans sing and dance for their team.","팬들은 자기 팀을 위해 노래하고 춤춰요."],
+    ["Every player has a cheering song.","선수마다 응원가가 있어요."],
+    ["People eat chicken in the stadium.","사람들은 야구장에서 치킨을 먹어요."],
+    ["Korea won the gold medal at the 2008 Olympics.","한국은 2008년 올림픽에서 금메달을 땄어요."]],
+ m:[["I went to a baseball stadium with my dad.","아빠와 야구장에 간 적이 있어요."],
+    ["Cheering in the stadium is so much fun!","야구장에서 응원하는 건 정말 재미있어요!"]]},
+{id:'archery',cat:'S',em:'🏹',ko:'양궁',en:'Archery',n:'archery',tag:'금메달 효자 종목',
+ f:[["In archery, players shoot arrows at a target.","양궁은 과녁에 화살을 쏘는 운동이에요."],
+    ["The center of the target is yellow. It is worth 10 points.","과녁 가운데는 노란색이에요. 10점이에요."],
+    ["The target is 70 meters away.","과녁은 70미터나 떨어져 있어요."],
+    ["Korea is one of the best countries in archery.","한국은 양궁을 가장 잘하는 나라 중 하나예요."],
+    ["Korean archers win many Olympic gold medals.","한국 선수들은 올림픽 금메달을 많이 따요."],
+    ["Archers need a calm mind.","양궁 선수는 차분한 마음이 필요해요."]],
+ m:[["I was so proud when Korean archers won.","한국 양궁 선수들이 이겼을 때 정말 자랑스러웠어요."],
+    ["I want to try archery someday.","언젠가 양궁을 해 보고 싶어요."]]},
+{id:'shorttrack',cat:'S',em:'⛸️',ko:'쇼트트랙',en:'Short Track',n:'short track',tag:'빙상 스피드',
+ f:[["Short track is a fast speed skating race.","쇼트트랙은 빠른 스피드 스케이팅 경주예요."],
+    ["Skaters race on a small ice track.","작은 얼음 트랙에서 경주해요."],
+    ["They go around tight corners very fast.","좁은 코너를 아주 빠르게 돌아요."],
+    ["Skaters wear helmets and gloves for safety.","안전을 위해 헬멧과 장갑을 껴요."],
+    ["Korea has won many Olympic medals in short track.","한국은 쇼트트랙에서 올림픽 메달을 많이 땄어요."],
+    ["The relay race is very exciting to watch.","계주 경기는 보기에 아주 신나요."]],
+ m:[["I cheer loudly when I watch short track on TV.","TV로 쇼트트랙을 볼 때 크게 응원해요."],
+    ["I go ice skating in winter.","저는 겨울에 스케이트를 타러 가요."]]},
+{id:'figure',cat:'S',em:'❄️',ko:'피겨스케이팅',en:'Figure Skating',n:'figure skating',tag:'얼음 위의 춤',
+ f:[["Figure skating is like dancing on ice.","피겨스케이팅은 얼음 위에서 추는 춤 같아요."],
+    ["Skaters jump, spin, and glide to music.","음악에 맞춰 점프하고, 돌고, 미끄러져요."],
+    ["Kim Yuna is a famous Korean figure skater.","김연아는 유명한 한국 피겨 선수예요."],
+    ["She won a gold medal at the 2010 Olympics.","2010년 올림픽에서 금메달을 땄어요."],
+    ["Skaters wear beautiful costumes.","선수들은 예쁜 의상을 입어요."],
+    ["It takes many years of practice.","오랜 시간 연습해야 해요."]],
+ m:[["Kim Yuna is my hero.","김연아 선수는 제 영웅이에요."],
+    ["I want to learn how to spin on ice.","얼음 위에서 도는 법을 배우고 싶어요."]]},
+{id:'badminton',cat:'S',em:'🏸',ko:'배드민턴',en:'Badminton',n:'badminton',tag:'공원에서 쉽게',
+ f:[["Badminton is played with rackets and a shuttlecock.","배드민턴은 라켓과 셔틀콕으로 해요."],
+    ["Players hit the shuttlecock over a high net.","높은 네트 위로 셔틀콕을 쳐요."],
+    ["You can play it in a park or a gym.","공원이나 체육관에서 할 수 있어요."],
+    ["Many Korean families play it on weekends.","많은 한국 가족이 주말에 배드민턴을 쳐요."],
+    ["An Se-young is a famous Korean badminton player.","안세영은 유명한 한국 배드민턴 선수예요."],
+    ["She won an Olympic gold medal in 2024.","2024년 올림픽에서 금메달을 땄어요."]],
+ m:[["I play badminton with my mom in the park.","엄마와 공원에서 배드민턴을 쳐요."],
+    ["It is easy to learn and fun for everyone.","배우기 쉽고 누구에게나 재미있어요."]]},
+{id:'tabletennis',cat:'S',em:'🏓',ko:'탁구',en:'Table Tennis',n:'table tennis',tag:'빠른 탁구공',
+ f:[["Table tennis is also called ping-pong.","탁구는 핑퐁이라고도 불러요."],
+    ["Players hit a small, light ball over a table.","작고 가벼운 공을 탁자 위로 쳐요."],
+    ["The ball moves very fast.","공이 아주 빠르게 움직여요."],
+    ["You need quick eyes and quick hands.","눈과 손이 빨라야 해요."],
+    ["Shin Yu-bin is a popular Korean table tennis player.","신유빈은 인기 있는 한국 탁구 선수예요."],
+    ["Many schools and community centers have ping-pong tables.","많은 학교와 주민센터에 탁구대가 있어요."]],
+ m:[["I play table tennis with my dad at the community center.","주민센터에서 아빠와 탁구를 쳐요."],
+    ["Table tennis helps me focus.","탁구는 집중하는 데 도움이 돼요."]]},
+{id:'basketball',cat:'S',em:'🏀',ko:'농구',en:'Basketball',n:'basketball',tag:'슛! 골인!',
+ f:[["In basketball, players throw the ball into a high basket.","농구는 높은 바구니에 공을 던져 넣는 운동이에요."],
+    ["Each team has five players on the court.","한 팀에 다섯 명이 코트에서 뛰어요."],
+    ["Players bounce the ball when they move.","움직일 때 공을 튕기며 가요."],
+    ["A shot from far away is worth three points.","멀리서 넣으면 3점이에요."],
+    ["Korea has a pro league called the KBL.","한국에는 KBL이라는 프로 리그가 있어요."],
+    ["Many students play basketball in the schoolyard.","많은 학생이 운동장에서 농구를 해요."]],
+ m:[["I practice shooting after school.","학교가 끝나면 슛 연습을 해요."],
+    ["Basketball is a great team sport.","농구는 멋진 팀 스포츠예요."]]},
+{id:'volleyball',cat:'S',em:'🏐',ko:'배구',en:'Volleyball',n:'volleyball',tag:'팀워크 스포츠',
+ f:[["In volleyball, two teams hit a ball over a net.","배구는 두 팀이 네트 위로 공을 쳐서 넘기는 운동이에요."],
+    ["Each team has six players.","한 팀에 여섯 명이 있어요."],
+    ["Your team can touch the ball three times.","우리 팀은 공을 세 번까지 칠 수 있어요."],
+    ["The ball must not touch the floor.","공이 바닥에 닿으면 안 돼요."],
+    ["Kim Yeon-koung is a famous Korean volleyball player.","김연경은 유명한 한국 배구 선수예요."],
+    ["Women's volleyball is very popular in Korea.","한국에서는 여자 배구가 아주 인기 있어요."]],
+ m:[["We play volleyball in P.E. class.","체육 시간에 배구를 해요."],
+    ["Teamwork is the most important thing in volleyball.","배구에서는 팀워크가 가장 중요해요."]]},
+{id:'swimming',cat:'S',em:'🏊',ko:'수영',en:'Swimming',n:'swimming',tag:'물속 운동',
+ f:[["Swimming is a sport in the water.","수영은 물에서 하는 운동이에요."],
+    ["There are many styles, like freestyle and backstroke.","자유형, 배영 같은 여러 영법이 있어요."],
+    ["It is good exercise for your whole body.","온몸 운동이 돼요."],
+    ["Many Korean students learn survival swimming at school.","많은 한국 학생이 학교에서 생존 수영을 배워요."],
+    ["Hwang Sun-woo is a famous Korean swimmer.","황선우는 유명한 한국 수영 선수예요."],
+    ["Swimming keeps us safe in the water.","수영은 물에서 우리를 안전하게 지켜 줘요."]],
+ m:[["I go swimming every Saturday.","저는 매주 토요일에 수영하러 가요."],
+    ["I can swim freestyle and backstroke.","저는 자유형과 배영을 할 수 있어요."]]},
+{id:'fencing',cat:'S',em:'🤺',ko:'펜싱',en:'Fencing',n:'fencing',tag:'칼싸움 스포츠',
+ f:[["Fencing is a sport with swords.","펜싱은 칼을 쓰는 운동이에요."],
+    ["Players wear white uniforms and masks.","선수들은 흰 옷을 입고 마스크를 써요."],
+    ["You get a point when you touch the other player.","상대를 찌르면 점수를 얻어요."],
+    ["A light turns on when you score.","점수를 내면 불이 켜져요."],
+    ["Korea's fencing team is very strong.","한국 펜싱 팀은 아주 강해요."],
+    ["The Korean men's sabre team won Olympic gold three times in a row.","한국 남자 사브르 단체팀은 올림픽에서 세 번 연속 금메달을 땄어요."]],
+ m:[["Fencing looks cool, like a movie.","펜싱은 영화처럼 멋있어 보여요."],
+    ["I want to try fencing someday.","언젠가 펜싱을 해 보고 싶어요."]]},
+{id:'jumprope',cat:'S',em:'🪢',ko:'줄넘기',en:'Jump Rope',n:'jump rope',tag:'학교 운동',
+ f:[["Jump rope is a simple exercise with a rope.","줄넘기는 줄 하나로 하는 간단한 운동이에요."],
+    ["Korean students do it at school a lot.","한국 학생들은 학교에서 줄넘기를 많이 해요."],
+    ["There are many tricks, like double unders.","이단 뛰기 같은 기술이 많아요."],
+    ["You can jump alone or with friends.","혼자서도, 친구들과도 할 수 있어요."],
+    ["In long rope, many people jump together.","긴 줄넘기는 여러 명이 함께 뛰어요."],
+    ["It makes your legs and heart strong.","다리와 심장을 튼튼하게 해 줘요."]],
+ m:[["I can do 100 jumps without stopping.","저는 쉬지 않고 100번 뛸 수 있어요."],
+    ["I am practicing double unders.","저는 이단 뛰기를 연습하고 있어요."]]},
+
+/* ---------- HOBBIES ---------- */
+{id:'kpop',cat:'H',em:'💃',ko:'케이팝 댄스',en:'K-pop Dance',n:'K-pop dance',tag:'신나는 춤',
+ f:[["K-pop is Korean pop music.","케이팝은 한국 대중음악이에요."],
+    ["K-pop groups are famous for their amazing dances.","케이팝 그룹은 멋진 춤으로 유명해요."],
+    ["Fans learn the dances and copy them.","팬들은 춤을 배우고 따라 해요."],
+    ["People post dance challenge videos online.","사람들은 댄스 챌린지 영상을 인터넷에 올려요."],
+    ["In random play dance, people dance together in the street.","랜덤 플레이 댄스에서는 사람들이 길에서 함께 춤춰요."],
+    ["BTS and BLACKPINK are famous all over the world.","BTS와 블랙핑크는 전 세계에서 유명해요."]],
+ m:[["I practice K-pop dances with my friends.","친구들과 케이팝 춤을 연습해요."],
+    ["Dancing makes me happy and full of energy.","춤을 추면 행복하고 힘이 넘쳐요."]]},
+{id:'noraebang',cat:'H',em:'🎤',ko:'노래방',en:'Noraebang',n:'noraebang',tag:'노래하는 방',
+ f:[["Noraebang means “song room.”","노래방은 ‘노래하는 방’이라는 뜻이에요."],
+    ["It is a small room for singing.","노래하는 작은 방이에요."],
+    ["The song words come up on a big TV screen.","큰 TV 화면에 가사가 나와요."],
+    ["You can choose from thousands of songs.","수천 곡 중에서 고를 수 있어요."],
+    ["After you sing, the machine gives you a score.","노래가 끝나면 기계가 점수를 줘요."],
+    ["Koreans go to noraebang with friends and family.","한국 사람들은 친구, 가족과 노래방에 가요."]],
+ m:[["I go to a coin noraebang with my friends.","친구들과 코인 노래방에 가요."],
+    ["I once got 100 points!","저는 100점을 받은 적이 있어요!"]]},
+{id:'webtoon',cat:'H',em:'📱',ko:'웹툰',en:'Webtoons',n:'reading webtoons',tag:'인터넷 만화',
+ f:[["Webtoons are comics you read on the internet.","웹툰은 인터넷으로 보는 만화예요."],
+    ["The word comes from “web” and “cartoon.”","‘web’과 ‘cartoon’을 합친 말이에요."],
+    ["You scroll down to read the story.","아래로 스크롤하며 이야기를 읽어요."],
+    ["Webtoons started in Korea.","웹툰은 한국에서 시작됐어요."],
+    ["New episodes come out every week.","매주 새 회차가 나와요."],
+    ["Many webtoons became dramas and movies.","많은 웹툰이 드라마와 영화가 되었어요."]],
+ m:[["I read webtoons on my tablet before bed.","자기 전에 태블릿으로 웹툰을 봐요."],
+    ["I want to draw my own webtoon someday.","언젠가 나만의 웹툰을 그리고 싶어요."]]},
+{id:'jegi',cat:'H',em:'🪶',ko:'제기차기',en:'Jegichagi',n:'jegichagi',tag:'전통 놀이',
+ f:[["Jegichagi is a traditional Korean game.","제기차기는 한국의 전통 놀이예요."],
+    ["A jegi looks like a shuttlecock with paper tails.","제기는 종이 꼬리가 달린 셔틀콕처럼 생겼어요."],
+    ["You kick the jegi up with the inside of your foot.","발 안쪽으로 제기를 차 올려요."],
+    ["Don't let it fall to the ground!","땅에 떨어지지 않게 해요!"],
+    ["The person with the most kicks wins.","가장 많이 찬 사람이 이겨요."],
+    ["Children play it on Seollal in winter.","아이들은 겨울 설날에 제기를 차요."]],
+ m:[["My best record is 15 kicks.","제 최고 기록은 15번이에요."],
+    ["I made my own jegi in art class.","미술 시간에 제기를 직접 만들었어요."]]},
+{id:'yunnori',cat:'H',em:'🎲',ko:'윷놀이',en:'Yunnori',n:'yunnori',tag:'명절 놀이',
+ f:[["Yunnori is a traditional Korean board game.","윷놀이는 한국의 전통 판 놀이예요."],
+    ["We throw four wooden sticks called yut.","윷이라는 나무 막대 네 개를 던져요."],
+    ["The sticks tell you how many spaces to move.","막대가 몇 칸 갈지 알려 줘요."],
+    ["The names are do, gae, geol, yut, and mo.","이름은 도, 개, 걸, 윷, 모예요."],
+    ["Do is one step, and mo is five steps.","도는 한 칸, 모는 다섯 칸이에요."],
+    ["Families play it together on holidays.","가족들은 명절에 함께 윷놀이를 해요."]],
+ m:[["I shout “Mo!” when I throw the sticks.","윷을 던질 때 “모!” 하고 외쳐요."],
+    ["My family plays yunnori every Seollal.","우리 가족은 설날마다 윷놀이를 해요."]]},
+{id:'gonggi',cat:'H',em:'🖐️',ko:'공기놀이',en:'Gonggi',n:'gonggi',tag:'손으로 하는 놀이',
+ f:[["Gonggi is a game with five small stones.","공기놀이는 작은 돌 다섯 개로 하는 놀이예요."],
+    ["Today, the stones are made of plastic.","요즘은 공깃돌을 플라스틱으로 만들어요."],
+    ["You throw one stone up and pick up the others.","돌 하나를 던져 올리고 다른 돌을 집어요."],
+    ["Then you catch the falling stone.","그리고 떨어지는 돌을 잡아요."],
+    ["There are five steps, from easy to hard.","쉬운 단계부터 어려운 단계까지 다섯 단계가 있어요."],
+    ["You only need your hands, so you can play anywhere.","손만 있으면 되니까 어디서나 할 수 있어요."]],
+ m:[["I play gonggi with my friends at break time.","쉬는 시간에 친구들과 공기놀이를 해요."],
+    ["I am good at catching the stones on the back of my hand.","저는 손등으로 공깃돌을 잘 받아요."]]},
+{id:'ttakji',cat:'H',em:'🟦',ko:'딱지치기',en:'Ttakji',n:'ttakji',tag:'종이 딱지 놀이',
+ f:[["Ttakji is a game with folded paper squares.","딱지치기는 접은 종이 딱지로 하는 놀이예요."],
+    ["We make a ttakji by folding two pieces of paper.","종이 두 장을 접어서 딱지를 만들어요."],
+    ["One ttakji is put on the ground.","딱지 하나를 바닥에 놓아요."],
+    ["Another player throws a ttakji at it hard.","다른 사람이 딱지를 세게 내리쳐요."],
+    ["If it flips over, you win!","딱지가 뒤집히면 이겨요!"],
+    ["This game became famous because of the drama “Squid Game.”","드라마 ‘오징어 게임’ 덕분에 유명해졌어요."]],
+ m:[["I fold my ttakji with thick paper.","저는 두꺼운 종이로 딱지를 접어요."],
+    ["Flipping a ttakji feels so good!","딱지를 뒤집으면 기분이 정말 좋아요!"]]},
+{id:'kite',cat:'H',em:'🪁',ko:'연날리기',en:'Kite Flying',n:'kite flying',tag:'겨울 하늘 놀이',
+ f:[["Kite flying is a traditional winter activity.","연날리기는 겨울 전통 놀이예요."],
+    ["The Korean kite has a round hole in the middle.","한국의 방패연은 가운데에 동그란 구멍이 있어요."],
+    ["It is called a shield kite, or bangpaeyeon.","방패연이라고 불러요."],
+    ["The hole helps the kite fly well in strong wind.","구멍 덕분에 센 바람에도 잘 날아요."],
+    ["People fly kites on Seollal.","사람들은 설날에 연을 날려요."],
+    ["Long ago, people wrote wishes on kites.","옛날 사람들은 연에 소원을 적었어요."]],
+ m:[["I flew a kite by the Han River.","한강에서 연을 날린 적이 있어요."],
+    ["I love watching my kite fly high in the sky.","내 연이 하늘 높이 나는 걸 보는 게 정말 좋아요."]]},
+{id:'baduk',cat:'H',em:'⚫',ko:'바둑',en:'Baduk',n:'baduk',tag:'생각하는 놀이',
+ f:[["Baduk is an old board game from Asia.","바둑은 아시아의 오래된 판 놀이예요."],
+    ["In English, it is called “Go.”","영어로는 ‘Go’라고 해요."],
+    ["Two players use black and white stones.","두 사람이 검은 돌과 흰 돌을 써요."],
+    ["You try to make more territory than the other player.","상대보다 더 많은 집을 지으려고 해요."],
+    ["Lee Sedol is a famous Korean baduk player.","이세돌은 유명한 한국 바둑 기사예요."],
+    ["He played against the computer program AlphaGo in 2016.","2016년에 컴퓨터 프로그램 알파고와 대결했어요."]],
+ m:[["I play baduk with my grandfather.","할아버지와 바둑을 둬요."],
+    ["Baduk helps me think carefully.","바둑은 깊이 생각하는 데 도움이 돼요."]]},
+{id:'hiking',cat:'H',em:'⛰️',ko:'등산',en:'Hiking',n:'hiking',tag:'산이 많은 나라',
+ f:[["Hiking is very popular in Korea.","한국에서는 등산이 아주 인기 있어요."],
+    ["About 70 percent of Korea is mountains.","한국 땅의 약 70%가 산이에요."],
+    ["Bukhansan is a famous mountain in Seoul.","북한산은 서울에 있는 유명한 산이에요."],
+    ["Hallasan on Jeju Island is the highest mountain in South Korea.","제주도 한라산은 남한에서 가장 높은 산이에요."],
+    ["Many hikers wear colorful outdoor clothes.","등산객들은 알록달록한 등산복을 입어요."],
+    ["People eat gimbap at the top of the mountain.","사람들은 산 정상에서 김밥을 먹어요."]],
+ m:[["I climbed a mountain with my family last fall.","지난 가을에 가족과 산에 올랐어요."],
+    ["The view from the top was amazing!","정상에서 본 경치가 정말 멋졌어요!"]]},
+{id:'seoye',cat:'H',em:'🖌️',ko:'서예',en:'Calligraphy',n:'calligraphy',tag:'붓글씨',
+ f:[["Calligraphy is the art of beautiful writing.","서예는 글씨를 아름답게 쓰는 예술이에요."],
+    ["We use a brush and black ink.","붓과 먹물을 사용해요."],
+    ["We write on thin paper called hanji.","한지라는 얇은 종이에 써요."],
+    ["People write Hangul or Chinese characters.","한글이나 한자를 써요."],
+    ["You need to sit up straight and stay calm.","바르게 앉아 마음을 차분히 해야 해요."],
+    ["Writing big letters with a brush is fun.","붓으로 큰 글씨를 쓰는 건 재미있어요."]],
+ m:[["I wrote my name with a brush in art class.","미술 시간에 붓으로 내 이름을 썼어요."],
+    ["Calligraphy makes my mind calm.","서예를 하면 마음이 차분해져요."]]},
+{id:'origami',cat:'H',em:'🦢',ko:'종이접기',en:'Paper Folding',n:'paper folding',tag:'색종이 놀이',
+ f:[["Paper folding is making shapes by folding paper.","종이접기는 종이를 접어 모양을 만드는 놀이예요."],
+    ["You only need colored paper.","색종이만 있으면 돼요."],
+    ["You can make animals, flowers, and boxes.","동물, 꽃, 상자를 만들 수 있어요."],
+    ["Hanji, traditional Korean paper, is strong and soft.","전통 종이인 한지는 질기고 부드러워요."],
+    ["There are many paper folding videos for kids.","어린이를 위한 종이접기 영상이 많아요."],
+    ["Paper folding is good for your hands and brain.","종이접기는 손과 뇌에 좋아요."]],
+ m:[["I can fold a paper crane and a frog.","저는 종이학과 개구리를 접을 수 있어요."],
+    ["I gave a paper flower to my mom.","엄마께 종이꽃을 선물했어요."]]},
+{id:'samul',cat:'H',em:'🥁',ko:'사물놀이',en:'Samulnori',n:'samulnori',tag:'전통 타악기',
+ f:[["Samulnori is Korean traditional drum music.","사물놀이는 한국의 전통 타악기 음악이에요."],
+    ["“Samul” means four things.","‘사물’은 네 가지 물건이라는 뜻이에요."],
+    ["It uses four instruments: kkwaenggwari, jing, janggu, and buk.","꽹과리, 징, 장구, 북 네 가지 악기를 써요."],
+    ["The sounds are like thunder, wind, rain, and clouds.","악기 소리는 천둥, 바람, 비, 구름 같아요."],
+    ["The music starts slow and gets faster and faster.","음악이 느리게 시작해서 점점 빨라져요."],
+    ["It makes everyone want to dance.","모두가 춤추고 싶어져요."]],
+ m:[["I play the janggu in our school club.","저는 학교 동아리에서 장구를 쳐요."],
+    ["When I play the buk, my heart beats fast.","북을 치면 가슴이 두근두근해요."]]},
+{id:'bike',cat:'H',em:'🚲',ko:'한강 자전거',en:'Biking by the Han River',n:'biking by the Han River',tag:'서울 자전거 길',
+ f:[["Many people ride bikes along the Han River in Seoul.","많은 사람이 서울 한강을 따라 자전거를 타요."],
+    ["There are long, safe bike roads.","길고 안전한 자전거 길이 있어요."],
+    ["You can rent a city bike called Ttareungi.","‘따릉이’라는 공공 자전거를 빌릴 수 있어요."],
+    ["On the way, you can see bridges and parks.","가는 길에 다리와 공원을 볼 수 있어요."],
+    ["People stop to eat ramyeon at convenience stores.","편의점에 들러 라면을 먹기도 해요."],
+    ["It is fun to ride at night when the bridges light up.","다리에 불이 켜지는 밤에 타면 재미있어요."]],
+ m:[["I ride my bike with my dad on weekends.","주말에 아빠와 자전거를 타요."],
+    ["I feel free when the wind blows on my face.","바람이 얼굴에 불면 자유로운 기분이 들어요."]]},
+{id:'dakku',cat:'H',em:'📒',ko:'다꾸',en:'Dakku (Diary Decorating)',n:'dakku',tag:'다이어리 꾸미기',
+ f:[["“Dakku” is short for “diary decorating” in Korean.","‘다꾸’는 ‘다이어리 꾸미기’의 줄임말이에요."],
+    ["People decorate their diaries with stickers and tape.","스티커와 테이프로 다이어리를 꾸며요."],
+    ["Washi tape and cute stickers are popular.","마스킹 테이프와 귀여운 스티커가 인기예요."],
+    ["You can also draw pictures and write about your day.","그림을 그리고 하루 이야기를 적을 수도 있어요."],
+    ["There are many stationery shops for dakku in Korea.","한국에는 다꾸 문구점이 많아요."],
+    ["It is a creative and relaxing hobby.","창의적이고 마음이 편해지는 취미예요."]],
+ m:[["I decorate my diary every night.","매일 밤 다이어리를 꾸며요."],
+    ["I collect cute stickers with my friends.","친구들과 귀여운 스티커를 모아요."]]}
+];
+
+/* ================= HELPERS ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem('akc_'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('akc_'+k,JSON.stringify(v))}catch(e){}}};
+const rnd=n=>{try{const a=new Uint32Array(1);crypto.getRandomValues(a);return a[0]%n}catch(e){return Math.floor(Math.random()*n)}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const byId=id=>I.find(x=>x.id===id);
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2400)}
+
+/* Korean particle: picks the first form after a final consonant (batchim), else the second */
+function josa(w,pair){
+  const [a,b]=pair.split('/'); const c=w.charCodeAt(w.length-1);
+  let has=false;
+  if(c>=0xAC00&&c<=0xD7A3)has=(c-0xAC00)%28>0;
+  else has=/[136780lmnLMN]$/.test(w);
+  return w+(has?a:b);
+}
+const BLANK='______';
+function fill(t,it){
+  const me=ename.trim()||BLANK;
+  return t.replace(/\{me\}/g,me).replace(/\{n\}/g,it.n)
+          .replace(/\{ko:([^}]+)\}/g,(_,p)=>josa(it.ko,p)).replace(/\{ko\}/g,it.ko);
+}
+const cap=s=>s.replace(/(^|[.!?]\s+)([a-z])/g,(m,p,c)=>p+c.toUpperCase());
+const fp=(p,it)=>[cap(fill(p[0],it)),fill(p[1],it)];
+const opts=it=>({
+  i:T[it.cat].intro.map(p=>fp(p,it)),
+  f:it.f,
+  m:[...it.m,...T[it.cat].my].map(p=>fp(p,it)),
+  e:T[it.cat].end.map(p=>fp(p,it))
+});
+
+/* ================= STATE ================= */
+let sel=store.get('sel',{}), ename=store.get('ename',''), me=store.get('me',null), groups=store.get('groups',null);
+let tab=(me&&me.cat)||'F', cur=null, mode='en';
+const S=id=>sel[id]||{i:0,f:[],m:[],e:0,own:''};
+const nPicked=id=>{const s=sel[id];if(!s)return 0;return s.f.length+s.m.length+(s.own.trim()?1:0)};
+
+/* ================= SPEECH ================= */
+let voices=[];const loadV=()=>{try{voices=speechSynthesis.getVoices()}catch(e){}};loadV();
+try{speechSynthesis.addEventListener('voiceschanged',loadV)}catch(e){}
+const enVoice=()=>voices.find(v=>/en[-_]US/i.test(v.lang))||voices.find(v=>/en[-_]GB/i.test(v.lang))||voices.find(v=>/^en/i.test(v.lang));
+function speak(text,rate=.92,onend){
+  if(!('speechSynthesis' in window)){toast('이 브라우저는 소리 읽기를 못 해요.');return}
+  try{speechSynthesis.cancel()}catch(e){}
+  const u=new SpeechSynthesisUtterance(text.replace(/_{2,}/g,'blank'));
+  const v=enVoice(); u.lang=v?v.lang:'en-US'; if(v)u.voice=v; u.rate=rate;
+  if(onend){u.onend=onend;u.onerror=onend}
+  speechSynthesis.speak(u);
+}
+const stopSpeech=()=>{try{speechSynthesis.cancel()}catch(e){}};
+
+/* ================= TEAM DRAW ================= */
+function parseNames(){return $('#names').value.split(/[\n,]+/).map(s=>s.trim()).filter(Boolean)}
+function syncCount(){
+  const n=parseNames().length;
+  $('#count').disabled=n>0;
+  $('#cntNote').textContent=n?`(이름 ${n}명 입력됨)`:'';
+  const N=n||(+$('#count').value||25), b=Math.floor(N/3), r=N%3;
+  $('#drawInfo').textContent=`→ ${N}명을 ${r?`${b+1}명 모둠 ${r}개, ${b}명 모둠 ${3-r}개`:`${b}명씩 3모둠`}으로 나눠요.`;
+}
+$('#names').addEventListener('input',()=>{store.set('names',$('#names').value);syncCount()});
+$('#count').addEventListener('input',syncCount);
+$('#names').value=store.get('names','');
+
+function makeGroups(){
+  let names=parseNames();
+  if(!names.length){const N=Math.min(60,Math.max(3,+$('#count').value||25));names=Array.from({length:N},(_,i)=>`${i+1}번`)}
+  names=shuffle(names);
+  const N=names.length, b=Math.floor(N/3), r=N%3;
+  const order=shuffle(ORDER);                 /* which topics get the extra student is random too */
+  const size={}; order.forEach((c,i)=>size[c]=b+(i<r?1:0));
+  const uniq=$('#uniq').checked, g={}; let k=0;
+  ORDER.forEach(c=>{
+    const items=shuffle(I.filter(x=>x.cat===c).map(x=>x.id));
+    g[c]=names.slice(k,k+size[c]).map((nm,j)=>({name:nm,item:uniq?items[j%items.length]:null}));
+    k+=size[c];
+  });
+  return g;
+}
+function renderGroups(g,spin){
+  const box=$('#groups');
+  box.classList.toggle('spin',!!spin);
+  if(!g){box.innerHTML='';$('#grpBtns').hidden=true;$('#grpHint').hidden=true;return}
+  box.innerHTML=ORDER.map(c=>{const C=CAT[c];return `<div class="grp" style="--c:${C.c}">
+    <h3><span aria-hidden="true">${C.em}</span>${C.ko} <small style="font-family:var(--f-en);font-size:15px">${C.en}</small><span class="n">${g[c].length}명</span></h3>
+    <div class="names">${g[c].map((s,i)=>{const it=s.item&&byId(s.item);
+      const isMe=me&&me.name===s.name;
+      return `<button class="nm${isMe?' me':''}" data-c="${c}" data-i="${i}">${esc(s.name)}${it?`<small>${it.em} ${esc(it.ko)}</small>`:''}</button>`}).join('')}</div></div>`}).join('');
+  $('#grpBtns').hidden=!!spin; $('#grpHint').hidden=!!spin;
+}
+let spinning=false;
+$('#assign').onclick=()=>{
+  if(spinning)return;
+  if(groups&&!confirm('다시 배정하면 지금 결과가 바뀌어요. 계속할까요?\nRe-draw? The current result will change.'))return;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  spinning=true;$('#assign').disabled=true;
+  let t=0;const iv=setInterval(()=>{renderGroups(makeGroups(),true);if(++t>=(reduce?1:14)){clearInterval(iv);done()}},90);
+  function done(){
+    groups=makeGroups();store.set('groups',groups);
+    me=null;store.set('me',null);
+    spinning=false;$('#assign').disabled=false;
+    renderGroups(groups);renderMine();renderGrid();
+    toast('🎉 배정 완료! Done!');
+  }
+};
+$('#groups').addEventListener('click',e=>{
+  const b=e.target.closest('.nm');if(!b||spinning||!groups)return;
+  const s=groups[b.dataset.c][+b.dataset.i];
+  me={name:s.name,cat:b.dataset.c,item:s.item};store.set('me',me);
+  if(/^[A-Za-z][A-Za-z .'-]*$/.test(s.name)&&!ename){ename=s.name;store.set('ename',ename)}
+  tab=me.cat;renderGroups(groups);renderMine();renderTabs();renderGrid();
+  if(me.item)openItem(me.item); else $('#mine').scrollIntoView({behavior:'smooth',block:'start'});
+});
+function groupsText(){
+  return ORDER.map(c=>`${CAT[c].em} ${CAT[c].ko} ${CAT[c].en} (${groups[c].length}명)\n`+
+    groups[c].map(s=>{const it=s.item&&byId(s.item);return '- '+s.name+(it?` : ${it.ko} ${it.en}`:'')}).join('\n')).join('\n\n');
+}
+$('#copyGroups').onclick=()=>copy(groupsText());
+$('#clearGroups').onclick=()=>{if(!confirm('배정 결과를 지울까요? Clear the result?'))return;groups=null;me=null;store.set('groups',null);store.set('me',null);renderGroups(null);renderMine();renderGrid()};
+$('#printGroups').onclick=()=>{
+  $('#print').innerHTML=`<h1>AKC 주제 배정 · Topic Groups</h1>`+ORDER.map(c=>`<div class="g"><b>${CAT[c].em} ${CAT[c].ko} ${CAT[c].en} (${groups[c].length}명)</b><p>${groups[c].map(s=>{const it=s.item&&byId(s.item);return esc(s.name)+(it?` (${esc(it.ko)})`:'')}).join(' · ')}</p></div>`).join('');
+  window.print();
+};
+
+/* ================= HOME ================= */
+function renderMine(){
+  const el=$('#mine');
+  if(!me){el.hidden=true;return}
+  const C=CAT[me.cat], it=me.item&&byId(me.item);
+  el.style.setProperty('--c',C.c); el.hidden=false;
+  el.innerHTML=`<span aria-hidden="true" style="font-size:28px">🎯</span><span><b>${esc(me.name)}</b>의 주제 · My topic</span>
+    <span class="big">${C.em} ${C.ko} ${C.en}${it?` → ${it.em} ${esc(it.ko)}`:''}</span><span class="sp"></span>
+    ${it?`<button class="btn pri" id="goMine">열기 Open</button>`:`<span style="color:var(--soft)">아래에서 하나 골라요! Pick one below.</span>`}
+    <button class="btn" id="clrMine" aria-label="지우기">✕</button>`;
+  const g=$('#goMine');if(g)g.onclick=()=>openItem(it.id);
+  $('#clrMine').onclick=()=>{me=null;store.set('me',null);renderMine();renderGroups(groups);renderGrid()};
+}
+function renderTabs(){
+  $('#tabs').innerHTML=ORDER.map(c=>{const C=CAT[c];
+    return `<button class="tab" role="tab" style="--c:${C.c}" data-c="${c}" aria-selected="${c===tab}"><span aria-hidden="true">${C.em}</span>${C.ko}<small>${C.en} 15</small></button>`}).join('');
+}
+function renderGrid(){
+  const C=CAT[tab];
+  $('#grid').innerHTML=I.filter(x=>x.cat===tab).map(x=>{const n=nPicked(x.id);
+    return `<button class="tile" style="--c:${C.c}" data-id="${x.id}" aria-label="${esc(x.ko)} ${esc(x.en)}">
+      ${me&&me.item===x.id?'<span class="star">⭐ 내 주제</span>':''}${n?`<span class="got">✓ ${n}</span>`:''}
+      <span class="em" aria-hidden="true">${x.em}</span><span class="ko">${esc(x.ko)}</span><span class="en">${esc(x.en)}</span><span class="tg">${esc(x.tag)}</span></button>`}).join('');
+}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;tab=b.dataset.c;renderTabs();renderGrid()});
+$('#grid').addEventListener('click',e=>{const b=e.target.closest('.tile');if(b)openItem(b.dataset.id)});
+
+/* ================= DETAIL ================= */
+function optHTML(k,type,list,s){
+  return `<div class="opts">${list.map((p,i)=>{
+    const on=type==='radio'?s[k]===i:s[k].includes(i);
+    return `<div class="opt${on?' on':''}"><label><input type="${type}" name="o_${k}" data-k="${k}" data-i="${i}"${on?' checked':''}>
+      <span class="tx"><span class="e">${esc(p[0])}</span><span class="k">${esc(p[1])}</span></span></label>
+      <button type="button" class="say" data-say="${esc(p[0])}" aria-label="듣기 Listen">🔊</button></div>`}).join('')}</div>`;
+}
+function renderDetail(){
+  const it=cur, C=CAT[it.cat], s=S(it.id), o=opts(it);
+  $('#detail').style.setProperty('--c',C.c);
+  $('#detail').innerHTML=`
+   <div class="hero" style="--c:${C.c}">
+     <div class="em" aria-hidden="true">${it.em}</div>
+     <div class="t"><h2>${esc(it.ko)}</h2><div class="en">${esc(it.en)}</div>
+       <span class="pill">${C.em} ${C.ko} ${C.en} · ${esc(it.tag)}</span></div>
+   </div>
+   <div class="namebox"><label for="ename">✏️ 내 영어 이름 My name</label>
+     <input id="ename" type="text" maxlength="30" placeholder="e.g. Minjun" value="${esc(ename)}" autocomplete="off"></div>
+   <p class="hint">① 시작 → ② 소개 → ③ 내 생각 → ④ 마무리 순서로 문장을 골라요. 🔊를 누르면 영어 발음을 들을 수 있어요.<br>Choose sentences in each step. Tap 🔊 to listen.</p>
+   <section class="step"><h3><span class="num">1</span>시작하기 · Beginning <small>하나 골라요 · Pick 1</small></h3>${optHTML('i','radio',o.i,s)}</section>
+   <section class="step"><h3><span class="num">2</span>소개하기 · About ${esc(it.en)} <small>3~4개 골라요 · Pick 3–4</small></h3>${optHTML('f','checkbox',o.f,s)}</section>
+   <section class="step"><h3><span class="num">3</span>내 생각 · My Story <small>1~2개 골라요 · Pick 1–2</small></h3>${optHTML('m','checkbox',o.m,s)}
+     <div class="own"><label for="own">✏️ 나만의 문장 (영어로, 선택) · My own sentence</label>
+     <textarea id="own" placeholder="I want to …  /  My favorite …  /  Last summer, I …">${esc(s.own)}</textarea></div></section>
+   <section class="step"><h3><span class="num">4</span>마무리 · Ending <small>하나 골라요 · Pick 1</small></h3>${optHTML('e','radio',o.e,s)}</section>`;
+}
+function openItem(id){
+  stopSpeech(); cur=byId(id); if(!cur)return;
+  renderDetail();
+  $('#sheet').hidden=false; $('#sheet').scrollTop=0; $('#home').style.display='none';
+  updateDock();
+}
+function closeItem(){stopSpeech();$('#sheet').hidden=true;$('#home').style.display='';$('#dock').hidden=true;cur=null;closeTray();renderGrid()}
+function step(d){const list=I.filter(x=>x.cat===cur.cat);const i=list.indexOf(cur);openItem(list[(i+d+list.length)%list.length].id)}
+$('#back').onclick=closeItem; $('#prev').onclick=()=>step(-1); $('#next').onclick=()=>step(1);
+
+function save(s){sel[cur.id]=s;store.set('sel',sel);updateDock()}
+$('#detail').addEventListener('change',e=>{
+  const inp=e.target; if(!inp.dataset||!inp.dataset.k)return;
+  const k=inp.dataset.k, i=+inp.dataset.i, s=S(cur.id);
+  if(inp.type==='radio'){s[k]=i; inp.closest('.opts').querySelectorAll('.opt').forEach((o,j)=>o.classList.toggle('on',j===i))}
+  else{const a=s[k].filter(x=>x!==i); if(inp.checked)a.push(i); s[k]=a; inp.closest('.opt').classList.toggle('on',inp.checked)}
+  save(s);
+});
+$('#detail').addEventListener('input',e=>{
+  if(e.target.id==='own'){const s=S(cur.id);s.own=e.target.value;save(s)}
+  if(e.target.id==='ename'){ename=e.target.value;store.set('ename',ename);
+    /* refresh name in sentence text without losing focus */
+    const o=opts(cur);['i'].forEach(k=>document.querySelectorAll(`[data-k="${k}"]`).forEach(inp=>{
+      const p=o[k][+inp.dataset.i], opt=inp.closest('.opt');
+      opt.querySelector('.e').textContent=p[0];opt.querySelector('.k').textContent=p[1];opt.querySelector('.say').dataset.say=p[0]}))}
+});
+$('#detail').addEventListener('click',e=>{const b=e.target.closest('.say');if(b){e.preventDefault();speak(b.dataset.say)}});
+
+/* ================= WRITING ================= */
+function paragraphs(){
+  const it=cur, s=S(it.id), o=opts(it), P=[];
+  if(o.i[s.i])P.push([o.i[s.i]]);
+  const f=s.f.slice().sort((a,b)=>a-b).map(i=>o.f[i]); if(f.length)P.push(f);
+  const m=s.m.slice().sort((a,b)=>a-b).map(i=>o.m[i]);
+  s.own.split('\n').map(x=>x.trim()).filter(Boolean).forEach(x=>m.push([x,'']));
+  if(m.length)P.push(m);
+  if(o.e[s.e])P.push([o.e[s.e]]);
+  return P;
+}
+const enText=()=>paragraphs().map(p=>p.map(x=>x[0]).join(' ')).join('\n\n');
+function writingText(){
+  if(mode==='en')return enText();
+  return paragraphs().map(p=>p.map(x=>x[0]+(x[1]?'\n('+x[1]+')':'')).join('\n')).join('\n\n');
+}
+function updateDock(){
+  if(!cur){$('#dock').hidden=true;return}
+  const s=S(cur.id), words=(enText().match(/[A-Za-z0-9'’-]+/g)||[]).length;
+  $('#dock').hidden=false;
+  $('#dockTxt').textContent=`소개 ${s.f.length} · 내 생각 ${s.m.length+(s.own.trim()?1:0)} · ${words} words`;
+}
+function openTray(){
+  $('#writing').value=writingText();
+  $('#mEn').setAttribute('aria-pressed',mode==='en');$('#mBoth').setAttribute('aria-pressed',mode!=='en');
+  const s=S(cur.id), n=paragraphs().reduce((a,p)=>a+p.length,0), w=(enText().match(/[A-Za-z0-9'’-]+/g)||[]).length;
+  $('#stat').textContent=`${n}문장 · ${w} words`+(s.f.length<3?' · 💡 소개 문장을 3개 이상 골라 봐요!':'');
+  $('#tray').hidden=false;
+}
+function closeTray(){$('#tray').hidden=true}
+$('#openTray').onclick=openTray;
+$('#closeTray').onclick=()=>{closeTray();stopSpeech()};
+$('#tray').addEventListener('click',e=>{if(e.target.id==='tray'){closeTray();stopSpeech()}});
+$('#mEn').onclick=()=>{mode='en';openTray()}; $('#mBoth').onclick=()=>{mode='both';openTray()};
+async function copy(t){
+  try{await navigator.clipboard.writeText(t);toast('복사했어요! Copied ✓')}
+  catch(e){toast('글을 길게 눌러 복사해 주세요. Select and copy.')}
+}
+$('#copyW').onclick=()=>{$('#writing').select();copy($('#writing').value)};
+$('#listenW').onclick=()=>speak(mode==='en'?$('#writing').value:enText(),.9);
+$('#stopW').onclick=stopSpeech;
+$('#printW').onclick=()=>{
+  const it=cur, P=paragraphs();
+  $('#print').innerHTML=`<h1>${esc(it.em)} ${esc(it.en)} (${esc(it.ko)}) — ${esc(ename||'Name: ________')}</h1><p style="color:#555">AKC · ${CAT[it.cat].en}</p>`+
+    P.map(p=>`<p>${p.map(x=>esc(x[0])+(x[1]?` <span class="k">${esc(x[1])}</span>`:'')).join(' ')}</p>`).join('')+
+    `<p><b>✏️ My notes</b></p><div class="lines"></div><div class="lines"></div><div class="lines"></div>`;
+  window.print();
+};
+
+/* ================= PRESENTATION PRACTICE ================= */
+let sl=[], si=0, showKo=true;
+function openStage(){
+  sl=paragraphs().flat(); if(!sl.length){toast('먼저 문장을 골라요! Pick sentences first.');return}
+  si=0; closeTray(); $('#stage').hidden=false; drawStage();
+}
+function drawStage(){
+  const x=sl[si]; $('#se').textContent=x[0]; $('#sk').textContent=showKo?x[1]:'';
+  $('#pg').textContent=`${si+1} / ${sl.length}`; $('#progB').style.width=((si+1)/sl.length*100)+'%';
+  $('#koToggle').setAttribute('aria-pressed',showKo);
+  $('#sPrev').disabled=si===0; $('#sNext').textContent=si===sl.length-1?'🎉':'▶';
+}
+function stageGo(d){stopSpeech();if(si+d>=sl.length){toast('🎉 끝까지 연습했어요! Great job!');return}si=Math.max(0,si+d);drawStage()}
+$('#openStage').onclick=openStage; $('#openStage2').onclick=openStage;
+$('#closeStage').onclick=()=>{stopSpeech();$('#stage').hidden=true};
+$('#sPrev').onclick=()=>stageGo(-1); $('#sNext').onclick=()=>stageGo(1);
+$('#sSay').onclick=()=>speak(sl[si][0],.92); $('#sSlow').onclick=()=>speak(sl[si][0],.65);
+$('#koToggle').onclick=()=>{showKo=!showKo;drawStage()};
+document.addEventListener('keydown',e=>{
+  if(!$('#stage').hidden){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();stageGo(1)}if(e.key==='ArrowLeft')stageGo(-1);if(e.key==='Escape')$('#closeStage').click();return}
+  if(e.key==='Escape'){if(!$('#tray').hidden){closeTray();stopSpeech()}else if(cur)closeItem()}
+});
+
+/* ================= INIT ================= */
+syncCount(); renderGroups(groups); renderMine(); renderTabs(); renderGrid();
+</script>
+</body>
+</html>
